@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:backgroundTint="#A04747"
+        android:scaleX="3"
+        android:scaleY="3"
+        android:text="Rooted"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="34sp"
+        android:typeface="normal" />
+
+    <ImageView
+        android:id="@+id/logo_image"
+        android:layout_width="217dp"
+        android:layout_height="214dp"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="@string/app_logo"
+        android:src="@drawable/ic_logo" />
+
+    <Button
+        android:id="@+id/gestionar_huertos_button"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#33B448"
+        android:text="Gestionar Huertos" />
+
+    <Button
+        android:id="@+id/tutoriales_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#33B448"
+        android:text="Tutoriales" />
+
+    <Button
+        android:id="@+id/enciclopedia_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#33B448"
+        android:text="Enciclopedia" />
+
+    <Button
+        android:id="@+id/soporte_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#33B448"
+        android:text="Soporte" />
+</LinearLayout>

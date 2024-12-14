@@ -15,7 +15,6 @@ public class GestionarHuertosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestionar_huertos);
-//pruebagithub borrar esto
         Button volverMenuButton = findViewById(R.id.volver_menu_button);
         volverMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override

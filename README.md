@@ -1,3 +1,3 @@
 # Rooted
 
-Primeras interfaces hechas, falta hacer un login 
+Primeras interfaces hechas, falta hacer un login y un registro

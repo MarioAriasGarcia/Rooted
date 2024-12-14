@@ -12,16 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rooted"
         tools:targetApi="31">
+
+
         <activity
             android:name=".ui.theme.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Rooted">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.GestionarHuertosActivity"
@@ -40,6 +37,20 @@
         </activity>
         <activity
             android:name=".view.SoporteActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Rooted">
+        </activity>
+        <activity
+            android:name=".view.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Rooted">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.RegisterActivity"
             android:exported="true"
             android:theme="@style/Theme.Rooted">
         </activity>

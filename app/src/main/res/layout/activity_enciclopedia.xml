@@ -4,18 +4,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/login_bg"
     android:padding="16dp">
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="AQUÍ SE INSERTARÁN LA ENCICLOPEDIA"
-        android:textSize="20sp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="sans-serif"
+        android:text="Enciclopedia"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="522dp"
+        android:layout_marginBottom="16dp"
+        android:text="Aqui va la enciclopedia"
+        android:textSize="90sp" />
 
     <Button
         android:id="@+id/volver_menu_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="40dp"
+        android:background="@drawable/rounded_rectangle"
+        android:backgroundTint="#DAFFAD"
         android:text="Volver al Menú Principal"/>
 </LinearLayout>

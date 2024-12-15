@@ -5,13 +5,18 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+
     <TextView
         android:id="@+id/nombre_huerto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:layout_height="50dp"
+        android:fontFamily="sans-serif"
+        android:text="def name"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        android:textColor="@color/black"
         android:textStyle="bold"
-        android:padding="8dp" />
+        android:layout_marginBottom="16dp"/>
 
     <TextView
         android:id="@+id/size_huerto"
@@ -19,4 +24,14 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:padding="8dp" />
+
+    <Button
+        android:id="@+id/volver_menu_button"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/rounded_rectangle"
+        android:backgroundTint="#DAFFAD"
+        android:text="Volver al Menú Principal"/>
+
 </LinearLayout>

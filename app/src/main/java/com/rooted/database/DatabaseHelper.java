@@ -5,11 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rooted.db";
-    private static final int DATABASE_VERSION = 5; // Incrementar versión para los nuevos cambios
+    private static final int DATABASE_VERSION = 6; // Incrementar versión para los nuevos cambios
 
     // Tabla de usuarios
     private static final String TABLE_USERS = "users";
@@ -61,8 +65,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String createHuertosTable = "CREATE TABLE " + TABLE_HUERTOS + " (" +
                 COLUMN_HUERTO_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_HUERTO_NOMBRE + " TEXT NOT NULL, " +
-                COLUMN_HUERTO_SIZE + " INTEGER NOT NULL)";
+                COLUMN_HUERTO_SIZE + " INTEGER NOT NULL, " +
+                "user_id INTEGER, " + // Relación con el usuario
+                "FOREIGN KEY(user_id) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
         db.execSQL(createHuertosTable);
+
 
         // Crear tabla de plantas
         String createPlantasTable = "CREATE TABLE " + TABLE_PLANTAS + " (" +
@@ -108,6 +115,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return isValid;
     }
 
+    public int getUserIdByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + COLUMN_ID + " FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{username});
+        int userId = -1;
+        if (cursor.moveToFirst()) {
+            userId = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+        return userId;
+    }
+
+
     // Métodos para manejar la tabla de mensajes
     public boolean insertMessage(String messageType, String messageSubtype, String messageContent) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -128,16 +149,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Métodos para gestionar la tabla de huertos
-    public long insertHuerto(String nombre, int size) {
+
+    public long insertHuerto(String nombre, int size, int userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_HUERTO_NOMBRE, nombre);
         values.put(COLUMN_HUERTO_SIZE, size);
+        values.put("user_id", userId); // Asociar el huerto al usuario
 
         long result = db.insert(TABLE_HUERTOS, null, values);
         db.close();
         return result; // Devuelve el ID del huerto creado
     }
+
+    public Cursor getHuertosByUserId(int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT * FROM " + TABLE_HUERTOS + " WHERE user_id = ?";
+        return db.rawQuery(query, new String[]{String.valueOf(userId)});
+    }
+
+
 
     public Cursor getAllHuertos() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -166,6 +197,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return rows > 0;
     }
+
+    public void agregarHuerto(String nombreHuerto, int size, int userId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_HUERTO_NOMBRE, nombreHuerto);
+        values.put(COLUMN_HUERTO_SIZE, size); // Ahora incluye el tamaño
+        values.put("user_id", userId); // Asocia el huerto al usuario
+        long result = db.insert(TABLE_HUERTOS, null, values);
+        db.close();
+
+        // Mensaje de log para verificar si la inserción fue exitosa
+        if (result == -1) {
+            Log.e("DatabaseHelper", "Error al insertar el huerto: " + nombreHuerto);
+        } else {
+            Log.d("DatabaseHelper", "Huerto añadido correctamente, ID: " + result);
+        }
+    }
+
+
+
+    public List<String> obtenerListaHuertos() {
+        List<String> huertos = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT nombre FROM huertos", null);
+        if (cursor.moveToFirst()) {
+            do {
+                huertos.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return huertos;
+    }
+
 
     // Métodos para gestionar la tabla de plantas
     public long insertPlanta(String nombre, int huertoId) {

@@ -10,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
 import com.rooted.database.DatabaseHelper;
+import com.rooted.model.Usuario;
 import com.rooted.ui.theme.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText usernameInput, passwordInput;
     private Button loginButton, registerButton;
     private DatabaseHelper databaseHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +36,27 @@ public class LoginActivity extends AppCompatActivity {
                 String username = usernameInput.getText().toString().trim();
                 String password = passwordInput.getText().toString().trim();
 
+
+
                 if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
                 } else {
                     boolean isValid = databaseHelper.validateUser(username, password);
                     if (isValid) {
                         Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+
+                        // Cargar el usuario desde la base de datos
+                        String usernameFromDb = username;
+                        int userId = databaseHelper.getUserIdByUsername(username);
+
+                        Usuario usuario = new Usuario(userId, usernameFromDb, password);
+
+                        // Pasar el objeto Usuario al Intent
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("user_id", userId);
+                        intent.putExtra("username", username);
                         startActivity(intent);
-                        finish(); // Finaliza la LoginActivity para que no se pueda volver con el botón de atrás
+                        finish(); // Finaliza la LoginActivity
                     } else {
                         Toast.makeText(LoginActivity.this, "Nombre de usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                     }

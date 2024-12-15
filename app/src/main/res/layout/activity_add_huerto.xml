@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -7,33 +6,33 @@
     android:padding="16dp">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Añadir Nuevo Huerto"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
 
     <EditText
-        android:id="@+id/nombre_huerto"
+        android:id="@+id/nombre_huerto_edittext"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:hint="Nombre del Huerto"
-        android:padding="20dp" />
+        android:inputType="text"
+        android:layout_marginBottom="16dp"/>
 
     <EditText
-        android:id="@+id/size_huerto"
+        android:id="@+id/size_huerto_edittext"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tamaño en m²"
-        android:padding="20dp"
-        android:inputType="number" />
+        android:layout_height="60dp"
+        android:hint="Tamaño del huerto (en m^2)"
+        android:inputType="text"
+        android:layout_marginBottom="16dp"/>
 
     <Button
         android:id="@+id/guardar_huerto_button"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Guardar Huerto"
-        android:background="@color/teal_200"
-        android:layout_marginTop="16dp" />
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>

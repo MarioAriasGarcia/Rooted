@@ -19,21 +19,26 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Recuperar el objeto Usuario desde el Intent
-        val usuario = intent.getSerializableExtra("USER_OBJECT") as? Usuario
+        // Recuperar el user_id y el username desde el Intent
+        val userId = intent.getIntExtra("user_id", -1)
+        val nombreUsuario = intent.getStringExtra("username")
 
-        if (usuario != null) {
-            // Mostrar mensaje de bienvenida o usar los datos del usuario
-            val nombreUsuario = usuario.nombreUsuario
-            Toast.makeText(this, "Bienvenido, $nombreUsuario", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(this, "No se pudo cargar la información del usuario", Toast.LENGTH_SHORT).show()
+        // Verificar que el user_id sea válido
+        if (userId == -1) {
+            Toast.makeText(this, "Error: No se pudo cargar el ID del usuario", Toast.LENGTH_SHORT).show()
+            finish() // Finalizar actividad si no hay un user_id válido
+            return
         }
 
-        // Configurar los botones como antes
+        // Mostrar un mensaje de bienvenida
+        Toast.makeText(this, "Bienvenido, usuario: $nombreUsuario", Toast.LENGTH_SHORT).show()
+
+        // Configurar los botones
         val gestionarHuertosButton = findViewById<Button>(R.id.gestionar_huertos_button)
         gestionarHuertosButton.setOnClickListener {
             val intent = Intent(this@MainActivity, GestionarHuertosActivity::class.java)
+            intent.putExtra("user_id", userId) // Pasar el user_id a la siguiente actividad
+            intent.putExtra("username", nombreUsuario) // Pasar el nombre de usuario a la siguiente actividad
             startActivity(intent)
         }
 

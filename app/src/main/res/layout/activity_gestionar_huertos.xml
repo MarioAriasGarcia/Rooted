@@ -27,11 +27,11 @@
             android:id="@+id/lista_huertos_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
             android:background="@drawable/color_button"
-            android:textAllCaps="false"
-            android:layout_marginBottom="20dp"/>
+            android:orientation="vertical"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/añadir_huerto_1"

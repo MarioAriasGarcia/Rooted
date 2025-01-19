@@ -7,7 +7,6 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
-import com.rooted.ui.theme.MainActivity;
 
 public class TutorialesActivity extends AppCompatActivity {
     @Override

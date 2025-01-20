@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
+import com.rooted.ui.theme.MainActivity;
 
 public class DetalleHuertoActivity extends AppCompatActivity {
 

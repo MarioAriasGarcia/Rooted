@@ -15,7 +15,7 @@
 
 
         <activity
-            android:name=".view.MainActivity"
+            android:name=".ui.theme.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Rooted">
@@ -32,6 +32,11 @@
         </activity>
         <activity
             android:name=".view.TutorialesActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Rooted">
+        </activity>
+        <activity
+            android:name=".view.ProfileActivity"
             android:exported="true"
             android:theme="@style/Theme.Rooted">
         </activity>

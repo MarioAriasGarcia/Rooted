@@ -19,6 +19,15 @@
         android:textSize="90sp"
         android:typeface="normal" />
 
+    <Button
+        android:id="@+id/miPerfil_button"
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_rectangle"
+        android:backgroundTint="#DAFFAD"
+        android:text="MI PERFIL" />
+
     <ImageView
         android:id="@+id/logo_image"
         android:layout_width="217dp"

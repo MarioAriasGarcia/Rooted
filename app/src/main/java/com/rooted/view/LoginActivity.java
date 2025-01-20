@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.rooted.R;
 import com.rooted.database.DatabaseHelper;
 import com.rooted.model.Usuario;
+import com.rooted.ui.theme.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText usernameInput, passwordInput;

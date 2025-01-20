@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
 import com.rooted.database.DatabaseHelper;
+import com.rooted.ui.theme.MainActivity;
 
 import java.util.ArrayList;
 

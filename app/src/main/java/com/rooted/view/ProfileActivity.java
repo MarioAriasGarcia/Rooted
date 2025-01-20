@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,6 @@ import com.rooted.ui.theme.MainActivity;
 public class ProfileActivity extends AppCompatActivity {
 
     private DatabaseHelper databaseHelper;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +40,15 @@ public class ProfileActivity extends AppCompatActivity {
             return;
         }
 
+        // Configurar los TextViews
+        TextView usernameTextView = findViewById(R.id.username_textview); // Asume que este es el ID para el TextView de "Nombre de usuario"
+        TextView userIdTextView = findViewById(R.id.user_id); // ID del TextView para "ID de usuario"
+
+        // Establecer los valores en los TextViews
+        usernameTextView.setText("Nombre de usuario: " + username);
+        userIdTextView.setText("ID de usuario: " + userId);
+
+        // Configurar el botón para volver al menú principal
         Button volverMenuButton = findViewById(R.id.volver_menu_button);
         volverMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +58,5 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 }

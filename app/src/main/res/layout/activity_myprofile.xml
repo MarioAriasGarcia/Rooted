@@ -29,12 +29,24 @@
             android:layout_centerInParent="true" />
 
     <TextView
+        android:id="@+id/username_textview"
         android:layout_width="match_parent"
-        android:layout_height="135dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="5dp"
         android:text="Nombre de usuario: "
-        android:textSize="25sp" />
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:id="@+id/user_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="20dp"
+        android:text="ID de usuario: "
+        android:textSize="20sp"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/volver_menu_button"

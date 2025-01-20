@@ -34,11 +34,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_HUERTO_NOMBRE = "nombre";
     private static final String COLUMN_HUERTO_SIZE = "size";
 
-    // Tabla de plantas
+    // Tabla de plantas-huerto
     private static final String TABLE_PLANTAS = "plantas";
     private static final String COLUMN_PLANTA_ID = "id";
     private static final String COLUMN_PLANTA_NOMBRE = "nombre";
     private static final String COLUMN_PLANTA_HUERTO_ID = "huerto_id"; // Clave foránea
+
+    // Tabla de plantas-enciclopedia
+    private static final String TABLE_ENCICLOPEDIA = "enciclopedia";
+    private static final String COLUMN_PLANTA_NOMBRE_E = "nombre";
+    private static final String COLUMN_PLANTA_DESC = "descripcion";
+    private static final String COLUMN_TIEMPO_RIEGO = "tiempo_riego";
+    private static final String COLUMN_TIEMPO_CRECIMIENTO = "tiempo_crecimiento";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -78,6 +85,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_PLANTA_HUERTO_ID + " INTEGER, " +
                 "FOREIGN KEY(" + COLUMN_PLANTA_HUERTO_ID + ") REFERENCES " + TABLE_HUERTOS + "(" + COLUMN_HUERTO_ID + "))";
         db.execSQL(createPlantasTable);
+
+        // Crear tabla de plantas-enciclopèdia
+        String createEnciclopediaTable = "CREATE TABLE " + TABLE_ENCICLOPEDIA + " (" +
+                COLUMN_PLANTA_NOMBRE_E + " TEXT PRIMARY KEY, " +
+                COLUMN_PLANTA_DESC + " TEXT NOT NULL, " +
+                COLUMN_TIEMPO_RIEGO + " INTEGER, " +
+                COLUMN_TIEMPO_CRECIMIENTO + " INTEGER, " +
+                "FOREIGN KEY(" + COLUMN_PLANTA_HUERTO_ID + ") REFERENCES " + TABLE_HUERTOS + "(" + COLUMN_HUERTO_ID + "))";
+        db.execSQL(createEnciclopediaTable);
     }
 
     @Override

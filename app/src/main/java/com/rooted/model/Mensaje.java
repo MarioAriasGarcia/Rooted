@@ -2,7 +2,7 @@ package com.rooted.model;
 
 import java.util.Date;
 
-public abstract class Mensaje {
+public class Mensaje {
 
     protected int id;
 

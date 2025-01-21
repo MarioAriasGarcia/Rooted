@@ -9,15 +9,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
-import com.rooted.database.DatabaseHelper;
+import com.rooted.controller.LoginController;
 import com.rooted.model.Usuario;
 import com.rooted.ui.theme.MainActivity;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText usernameInput, passwordInput;
     private Button loginButton, registerButton;
-    private DatabaseHelper databaseHelper;
-
+    private LoginController loginController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,42 +27,41 @@ public class LoginActivity extends AppCompatActivity {
         passwordInput = findViewById(R.id.passwordInputLogin);
         loginButton = findViewById(R.id.login_button);
         registerButton = findViewById(R.id.register_redirect_button);
-        databaseHelper = new DatabaseHelper(this);
+        loginController = new LoginController(this); // Inicializar el controlador
 
+        // Acción del botón de inicio de sesión
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = usernameInput.getText().toString().trim();
                 String password = passwordInput.getText().toString().trim();
 
-
-
                 if (username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Validar credenciales
+                boolean isValid = loginController.validateLogin(username, password);
+                if (isValid) {
+                    Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+
+                    // Obtener información del usuario
+                    Usuario usuario = loginController.getUserByUsername(username);
+
+                    // Navegar a la pantalla principal
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("user_id", usuario.getId());
+                    intent.putExtra("username", usuario.getNombreUsuario());
+                    startActivity(intent);
+                    finish();
                 } else {
-                    boolean isValid = databaseHelper.validateUser(username, password);
-                    if (isValid) {
-                        Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-
-                        // Cargar el usuario desde la base de datos
-                        String usernameFromDb = username;
-                        int userId = databaseHelper.getUserIdByUsername(username);
-
-                        Usuario usuario = new Usuario(userId, usernameFromDb, password);
-
-                        // Pasar el objeto Usuario al Intent
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("user_id", userId);
-                        intent.putExtra("username", username);
-                        startActivity(intent);
-                        finish(); // Finaliza la LoginActivity
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Nombre de usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(LoginActivity.this, "Nombre de usuario o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        // Acción del botón de registro
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,9 +69,5 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
     }
 }

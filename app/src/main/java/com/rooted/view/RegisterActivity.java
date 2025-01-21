@@ -8,13 +8,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.rooted.database.DatabaseHelper;
 import com.rooted.R;
+import com.rooted.controller.RegisterController;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText usernameInput, passwordInput, confirmPasswordInput;
-    private Button registerButton;
-    private DatabaseHelper databaseHelper;
+    private Button registerButton, loginRedirectButton;
+    private RegisterController registerController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +22,13 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         usernameInput = findViewById(R.id.usernameInputRegister);
-        registerButton = findViewById(R.id.register_button);
         passwordInput = findViewById(R.id.passwordInputRegister);
         confirmPasswordInput = findViewById(R.id.confirm_password_input);
-        databaseHelper = new DatabaseHelper(this);
+        registerButton = findViewById(R.id.register_button);
+        loginRedirectButton = findViewById(R.id.login_redirect_button);
+
+        // Inicializar el controlador
+        registerController = new RegisterController(this);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,23 +37,17 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = passwordInput.getText().toString().trim();
                 String confirmPassword = confirmPasswordInput.getText().toString().trim();
 
-                if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                    Toast.makeText(RegisterActivity.this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-                } else if (!password.equals(confirmPassword)) {
-                    Toast.makeText(RegisterActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-                } else {
-                    boolean isRegistered = databaseHelper.registerUser(username, password);
-                    if (isRegistered) {
-                        Toast.makeText(RegisterActivity.this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show();
-                        finish(); // Cierra la actividad
-                    } else {
-                        Toast.makeText(RegisterActivity.this, "El nombre de usuario ya está en uso", Toast.LENGTH_SHORT).show();
-                    }
+                // Usar el controlador para registrar al usuario
+                String message = registerController.registerUser(username, password, confirmPassword);
+                Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                // Si el registro es exitoso, cerrar la actividad
+                if (message.equals("Usuario registrado exitosamente")) {
+                    finish();
                 }
             }
         });
 
-        Button loginRedirectButton = findViewById(R.id.login_redirect_button);
         loginRedirectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +55,5 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
 }

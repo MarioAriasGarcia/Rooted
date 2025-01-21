@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
-import com.rooted.database.DatabaseHelper;
+import com.rooted.controller.SoporteController;
 import com.rooted.ui.theme.MainActivity;
 
 import java.util.ArrayList;
@@ -21,74 +21,79 @@ import java.util.ArrayList;
 public class SoporteActivity extends AppCompatActivity {
 
     private EditText textoTipo, textoContenido;
-    private String tipoSeleccionado; // Variable para almacenar el valor seleccionado en el spinner
-    private DatabaseHelper databaseHelper; // Instancia del helper de base de datos
+    private String tipoSeleccionado; // Tipo seleccionado en el spinner
+    private SoporteController soporteController; // Controlador
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soporte);
 
-        // Inicializamos el helper de base de datos
-        databaseHelper = new DatabaseHelper(this);
+        // Inicializamos el controlador
+        soporteController = new SoporteController(this);
 
+        // Configurar los botones y campos de texto
+        configurarUI();
+    }
+
+    private void configurarUI() {
+        // Configuración del botón para volver al menú
         Button volverMenuButton = findViewById(R.id.volver_menu_button);
-        volverMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SoporteActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        volverMenuButton.setOnClickListener(v -> {
+            Intent intent = new Intent(SoporteActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         });
 
+        // Configuración del spinner
         Spinner spinner = findViewById(R.id.spinner_soporte);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                tipoSeleccionado = parent.getItemAtPosition(position).toString(); // Guardamos el tipo seleccionado
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                tipoSeleccionado = null; // Si no selecciona nada
-            }
-        });
-
         ArrayList<String> listaSpinner = new ArrayList<>();
-        listaSpinner.add("Reporte"); // Elementos del desplegable de la interfaz de soporte
+        listaSpinner.add("Reporte");
         listaSpinner.add("Sugerencia");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaSpinner);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         spinner.setAdapter(adapter);
 
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tipoSeleccionado = parent.getItemAtPosition(position).toString(); // Guardar tipo seleccionado
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                tipoSeleccionado = null;
+            }
+        });
+
         textoTipo = findViewById(R.id.soporte_texto_tipo);
         textoContenido = findViewById(R.id.soporte_texto);
 
+        // Configuración del botón para enviar
         Button enviarButton = findViewById(R.id.enviar_button);
-        enviarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Obtenemos los datos de los campos de texto
-                String tipoErrorConsulta = textoTipo.getText().toString().trim();
-                String contenidoMensaje = textoContenido.getText().toString().trim();
+        enviarButton.setOnClickListener(v -> guardarMensaje());
+    }
 
-                if (tipoSeleccionado == null || tipoErrorConsulta.isEmpty() || contenidoMensaje.isEmpty()) {
-                    Toast.makeText(SoporteActivity.this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Guardar el mensaje en la base de datos
-                    boolean isInserted = databaseHelper.insertMessage(tipoSeleccionado, tipoErrorConsulta, contenidoMensaje);
+    private void guardarMensaje() {
+        // Obtenemos los datos de los campos de texto
+        String tipoErrorConsulta = textoTipo.getText().toString().trim();
+        String contenidoMensaje = textoContenido.getText().toString().trim();
 
-                    if (isInserted) {
-                        Toast.makeText(SoporteActivity.this, "Mensaje guardado correctamente", Toast.LENGTH_SHORT).show();
-                        // Limpiar campos después de guardar
-                        textoTipo.setText("");
-                        textoContenido.setText("");
-                    } else {
-                        Toast.makeText(SoporteActivity.this, "Error al guardar el mensaje", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
+        if (tipoSeleccionado == null || tipoErrorConsulta.isEmpty() || contenidoMensaje.isEmpty()) {
+            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Delegar al controlador para guardar el mensaje
+        boolean isInserted = soporteController.guardarMensaje(tipoSeleccionado, tipoErrorConsulta, contenidoMensaje);
+
+        if (isInserted) {
+            Toast.makeText(this, "Mensaje guardado correctamente", Toast.LENGTH_SHORT).show();
+            // Limpiar campos después de guardar
+            textoTipo.setText("");
+            textoContenido.setText("");
+        } else {
+            Toast.makeText(this, "Error al guardar el mensaje", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -25,7 +25,6 @@ public class HuertoController {
         if (userId <= 0) {
             throw new IllegalArgumentException("El ID del usuario no es válido.");
         }
-
         return huertoDAO.insertHuerto(nombreHuerto, size, userId);
     }
 

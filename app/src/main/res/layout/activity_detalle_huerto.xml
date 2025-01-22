@@ -2,6 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/login_bg"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -32,6 +33,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/rounded_rectangle"
         android:backgroundTint="#DAFFAD"
-        android:text="Volver al Menú Principal"/>
+        android:layout_marginTop="500dp"
+        android:text="Volver atras"/>
 
 </LinearLayout>

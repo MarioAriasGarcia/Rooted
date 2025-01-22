@@ -71,6 +71,7 @@ public class GestionarHuertosActivity extends AppCompatActivity {
                 huertoButton.setOnClickListener(v -> {
                     Intent intent = new Intent(this, DetalleHuertoActivity.class);
                     intent.putExtra("nombre", huerto.getNombre());
+                    intent.putExtra("size", huerto.getSize());
                     startActivity(intent);
                 });
                 listaHuertosLayout.addView(huertoButton);

@@ -2,9 +2,9 @@ package com.rooted.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,27 +18,32 @@ public class DetalleHuertoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_huerto);
 
-        // Obtenemos datos pasados desde la actividad anterior
-        String nombreHuerto = getIntent().getStringExtra("nombre");
-        int sizeHuerto = Integer.parseInt(getIntent().getStringExtra("size"));
+        // Obtener datos pasados desde la actividad anterior
+        Intent intent = getIntent();
+        String nombreHuerto = intent.getStringExtra("nombre");
+        int sizeHuerto = intent.getIntExtra("size", -1); // Usa -1 como valor por defecto si no se pasa "size"
 
-        // Mostramos el nombre del huerto
+        // Validar datos
+        if (nombreHuerto == null || sizeHuerto == -1) {
+            Toast.makeText(this, "Datos del huerto no disponibles", Toast.LENGTH_SHORT).show();
+            finish(); // Finaliza la actividad si los datos son inválidos
+            return;
+        }
+
+        // Mostrar el nombre del huerto
         TextView nombreTextView = findViewById(R.id.nombre_huerto);
         nombreTextView.setText(nombreHuerto);
 
-        TextView sizeTextView = findViewById(R.id.nombre_huerto);
-        sizeTextView.setText(sizeHuerto);
-
+        // Mostrar el tamaño del huerto
+        TextView sizeTextView = findViewById(R.id.size_huerto); // Asegúrate de que este ID exista en el layout
+        sizeTextView.setText(String.valueOf(sizeHuerto)); // Convertir entero a cadena
 
         // Configurar botón para volver al menú
         Button volverMenuButton = findViewById(R.id.volver_menu_button);
-        volverMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DetalleHuertoActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        volverMenuButton.setOnClickListener(v -> {
+            Intent mainIntent = new Intent(DetalleHuertoActivity.this, MainActivity.class);
+            startActivity(mainIntent);
+            finish();
         });
     }
 }

@@ -7,7 +7,7 @@ public class Enciclopedia {
     ArrayList<EntradasEnciclopedia> entradasEncliclopedia;
     public Enciclopedia(){
         entradasEncliclopedia = new ArrayList<EntradasEnciclopedia>();
-   }
+    }
 
    public void addEntrada(EntradasEnciclopedia entrada){
         this.entradasEncliclopedia.add(entrada);

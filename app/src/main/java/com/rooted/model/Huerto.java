@@ -7,7 +7,7 @@ public class Huerto {
 
     protected int id;
     private String nombre;
-    private List<Planta> plantas;
+    private ArrayList<Planta> plantas;
     private int size;
 
     public Huerto(int id, String nombre, int size) {

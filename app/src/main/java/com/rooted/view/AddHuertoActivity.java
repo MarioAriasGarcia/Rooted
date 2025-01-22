@@ -9,12 +9,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
-import com.rooted.database.DatabaseHelper;
+import com.rooted.controller.HuertoController;
 
 public class AddHuertoActivity extends AppCompatActivity {
 
     private EditText nombreHuertoEditText, sizeHuertoEditText;
-    private DatabaseHelper databaseHelper;
+    private HuertoController huertoController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,39 +23,39 @@ public class AddHuertoActivity extends AppCompatActivity {
 
         nombreHuertoEditText = findViewById(R.id.nombre_huerto_edittext);
         sizeHuertoEditText = findViewById(R.id.size_huerto_edittext);
-        databaseHelper = new DatabaseHelper(this);
+
+        // Inicializa el controlador
+        huertoController = new HuertoController(this);
 
         Button guardarHuertoButton = findViewById(R.id.guardar_huerto_button);
         guardarHuertoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombreHuerto = nombreHuertoEditText.getText().toString().trim();
-                String sizeHuertoString = sizeHuertoEditText.getText().toString().trim();
-
-                int userId = getIntent().getIntExtra("user_id", -1); // Recupera el user_id
-
-                if (nombreHuerto.isEmpty()) {
-                    Toast.makeText(AddHuertoActivity.this, "Por favor, ingresa un nombre para el huerto", Toast.LENGTH_SHORT).show();
-                } else if (sizeHuertoString.isEmpty()) {
-                    Toast.makeText(AddHuertoActivity.this, "Por favor, ingresa un tamaño para el huerto", Toast.LENGTH_SHORT).show();
-                } else if (userId == -1) {
-                    Toast.makeText(AddHuertoActivity.this, "Fallo con el userId en la base de datos", Toast.LENGTH_SHORT).show();
-                } else {
-                    try {
-                        int sizeHuerto = Integer.parseInt(sizeHuertoString); // Convierte el texto a entero
-                        if (sizeHuerto <= 0) {
-                            Toast.makeText(AddHuertoActivity.this, "El tamaño debe ser mayor que 0", Toast.LENGTH_SHORT).show();
-                        } else {
-                            databaseHelper.agregarHuerto(nombreHuerto, sizeHuerto, userId); // Crea huerto con el usuario correspondiente
-                            Toast.makeText(AddHuertoActivity.this, "Huerto añadido correctamente", Toast.LENGTH_SHORT).show();
-                            finish(); // Vuelve a la pantalla anterior
-                        }
-                    } catch (NumberFormatException e) {
-                        Toast.makeText(AddHuertoActivity.this, "Por favor, ingresa un número válido para el tamaño", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                agregarHuerto();
             }
         });
+    }
 
+    private void agregarHuerto() {
+        String nombreHuerto = nombreHuertoEditText.getText().toString().trim();
+        String sizeHuertoString = sizeHuertoEditText.getText().toString().trim();
+
+        int userId = getIntent().getIntExtra("user_id", -1); // Recupera el user_id del intent
+
+        try {
+            if (sizeHuertoString.isEmpty()) {
+                throw new IllegalArgumentException("Por favor, ingresa un tamaño válido para el huerto.");
+            }
+
+            int sizeHuerto = Integer.parseInt(sizeHuertoString); // Convierte el tamaño a entero
+            huertoController.agregarHuerto(nombreHuerto, sizeHuerto, userId); // Delegar la lógica al controlador
+
+            Toast.makeText(this, "Huerto añadido correctamente", Toast.LENGTH_SHORT).show();
+            finish(); // Vuelve a la pantalla anterior
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Por favor, ingresa un número válido para el tamaño", Toast.LENGTH_SHORT).show();
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

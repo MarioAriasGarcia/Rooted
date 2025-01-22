@@ -45,8 +45,8 @@ public class ProfileActivity extends AppCompatActivity {
         TextView userIdTextView = findViewById(R.id.user_id); // ID del TextView para "ID de usuario"
 
         // Establecer los valores en los TextViews
-        usernameTextView.setText("Nombre de usuario: " + username);
-        userIdTextView.setText("ID de usuario: " + userId);
+        usernameTextView.setText("" + username);
+        userIdTextView.setText("" + userId);
 
         // Configurar el botón para volver al menú principal
         Button volverMenuButton = findViewById(R.id.volver_menu_button);

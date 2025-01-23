@@ -15,11 +15,16 @@ public class TutorialesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutoriales);
 
+        int userId = getIntent().getIntExtra("user_id", -1);
+        String nombreUsuario = getIntent().getStringExtra("username");
+
         Button volverMenuButton = findViewById(R.id.volver_menu_button);
         volverMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(TutorialesActivity.this, MainActivity.class);
+                intent.putExtra("user_id", userId); // Pasar el user_id a la siguiente actividad
+                intent.putExtra("username", nombreUsuario); // Pasar el nombre de usuario a la siguiente actividad
                 startActivity(intent);
                 finish();
             }

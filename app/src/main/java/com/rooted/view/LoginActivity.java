@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                 boolean isValid = loginController.validateLogin(username, password);
                 if (isValid) {
                     Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(LoginActivity.this, "Bienvenido, usuario: " + username , Toast.LENGTH_SHORT).show();
                     // Obtener información del usuario
                     Usuario usuario = loginController.getUserByUsername(username);
 

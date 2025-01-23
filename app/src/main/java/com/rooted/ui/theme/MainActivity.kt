@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Mostrar un mensaje de bienvenida
-        Toast.makeText(this, "Bienvenido, usuario: $nombreUsuario", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Menu pricipal", Toast.LENGTH_SHORT).show()
 
         // Configurar los botones
         val gestionarHuertosButton = findViewById<Button>(R.id.gestionar_huertos_button)
@@ -46,18 +46,24 @@ class MainActivity : AppCompatActivity() {
         val tutorialesButton = findViewById<Button>(R.id.tutoriales_button)
         tutorialesButton.setOnClickListener {
             val intent = Intent(this@MainActivity, TutorialesActivity::class.java)
+            intent.putExtra("user_id", userId) // Pasar el user_id a la siguiente actividad
+            intent.putExtra("username", nombreUsuario) // Pasar el nombre de usuario a la siguiente actividad
             startActivity(intent)
         }
 
         val enciclopediaButton = findViewById<Button>(R.id.enciclopedia_button)
         enciclopediaButton.setOnClickListener {
             val intent = Intent(this@MainActivity, EnciclopediaActivity::class.java)
+            intent.putExtra("user_id", userId) // Pasar el user_id a la siguiente actividad
+            intent.putExtra("username", nombreUsuario) // Pasar el nombre de usuario a la siguiente actividad
             startActivity(intent)
         }
 
         val soporteButton = findViewById<Button>(R.id.soporte_button)
         soporteButton.setOnClickListener {
             val intent = Intent(this@MainActivity, SoporteActivity::class.java)
+            intent.putExtra("user_id", userId) // Pasar el user_id a la siguiente actividad
+            intent.putExtra("username", nombreUsuario) // Pasar el nombre de usuario a la siguiente actividad
             startActivity(intent)
         }
 

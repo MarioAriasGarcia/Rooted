@@ -36,10 +36,10 @@ public class DetalleHuertoActivity extends AppCompatActivity {
 
         // Mostrar el tamaño del huerto
         TextView sizeTextView = findViewById(R.id.size_huerto); // Asegúrate de que este ID exista en el layout
-        sizeTextView.setText(String.valueOf(sizeHuerto)); // Convertir entero a cadena
+        sizeTextView.setText("Tamaño del huerto: " + String.valueOf(sizeHuerto) + "m^2"); // Convertir entero a cadena
 
         // Configurar botón para volver al menú
-        Button volverMenuButton = findViewById(R.id.volver_menu_button);
+        Button volverMenuButton = findViewById(R.id.volver_atras_button);
         volverMenuButton.setOnClickListener(v -> {
             Intent mainIntent = new Intent(DetalleHuertoActivity.this, MainActivity.class);
             startActivity(mainIntent);

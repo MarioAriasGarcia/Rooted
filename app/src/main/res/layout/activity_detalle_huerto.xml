@@ -27,7 +27,7 @@
         android:padding="8dp" />
 
     <Button
-        android:id="@+id/volver_menu_button"
+        android:id="@+id/volver_atras_button"
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_gravity="center_horizontal"

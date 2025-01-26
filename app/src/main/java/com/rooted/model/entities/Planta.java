@@ -1,7 +1,4 @@
-package com.rooted.model;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.rooted.model.entities;
 
 public class Planta {
     private String nombre;

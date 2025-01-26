@@ -1,10 +1,11 @@
-package com.rooted.model;
+package com.rooted.model.DAOs;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.rooted.database.DatabaseHelper;
+import com.rooted.model.entities.Mensaje;
 
 import java.util.ArrayList;
 import java.util.Date;

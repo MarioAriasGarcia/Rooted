@@ -1,4 +1,4 @@
-package com.rooted.model;
+package com.rooted.model.DAOs;
 
 import android.content.ContentValues;
 import android.content.Context;

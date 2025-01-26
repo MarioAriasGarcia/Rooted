@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
 import com.rooted.controller.HuertoController;
-import com.rooted.model.Huerto;
+import com.rooted.model.entities.Huerto;
 import com.rooted.ui.theme.MainActivity;
 
 import java.util.List;

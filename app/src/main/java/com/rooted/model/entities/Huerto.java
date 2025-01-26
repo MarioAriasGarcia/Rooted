@@ -1,4 +1,4 @@
-package com.rooted.model;
+package com.rooted.model.entities;
 
 import java.util.ArrayList;
 import java.util.List;

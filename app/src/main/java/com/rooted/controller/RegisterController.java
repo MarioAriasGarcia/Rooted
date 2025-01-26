@@ -1,7 +1,7 @@
 package com.rooted.controller;
 
 import android.content.Context;
-import com.rooted.model.UsuarioDAO;
+import com.rooted.model.DAOs.UsuarioDAO;
 
 public class RegisterController {
     private UsuarioDAO usuarioDAO;

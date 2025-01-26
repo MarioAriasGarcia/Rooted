@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.rooted.R
-import com.rooted.model.Usuario
 import com.rooted.view.EnciclopediaActivity
 import com.rooted.view.GestionarHuertosActivity
 import com.rooted.view.ProfileActivity

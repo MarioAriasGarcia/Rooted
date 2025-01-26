@@ -1,10 +1,10 @@
 package com.rooted.controller;
 
 import android.content.Context;
-import com.rooted.model.Mensaje;
-import com.rooted.model.MensajeDAO;
-import com.rooted.model.MensajeReporte;
-import com.rooted.model.MensajeSoporte;
+import com.rooted.model.entities.Mensaje;
+import com.rooted.model.DAOs.MensajeDAO;
+import com.rooted.model.entities.MensajeReporte;
+import com.rooted.model.entities.MensajeSoporte;
 
 public class SoporteController {
     private MensajeDAO mensajeDAO;

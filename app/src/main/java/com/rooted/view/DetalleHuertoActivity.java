@@ -30,6 +30,13 @@ public class DetalleHuertoActivity extends AppCompatActivity {
             return;
         }
 
+        Button añadirHuertoButton = findViewById(R.id.añadir_planta);
+        añadirHuertoButton.setOnClickListener(v -> {
+            Intent plantaIntent = new Intent(this, AddPlantaActivity.class);
+            //intent.putExtra("user_id", userId);
+            startActivity(plantaIntent);
+        });
+
         // Mostrar el nombre del huerto
         TextView nombreTextView = findViewById(R.id.nombre_huerto);
         nombreTextView.setText(nombreHuerto);

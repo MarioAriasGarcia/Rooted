@@ -26,6 +26,28 @@
         android:textSize="18sp"
         android:padding="8dp" />
 
+    <!-- Contenedor dinámico para la lista de plantas -->
+    <LinearLayout
+        android:id="@+id/lista_plantas_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/color_button"
+        android:textAllCaps="false"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/añadir_planta"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/color_button"
+        android:text="Añadir nueva planta al huerto"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:layout_marginBottom="20dp"/>
+
     <Button
         android:id="@+id/volver_atras_button"
         android:layout_width="300dp"
@@ -33,7 +55,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/rounded_rectangle"
         android:backgroundTint="#DAFFAD"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="300dp"
         android:text="Volver atras"/>
 
 </LinearLayout>

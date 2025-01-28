@@ -32,27 +32,38 @@ public class AddPlantaActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_planta);
 
+        // Obtener el ID del huerto desde el Intent
+        int huertoId = getIntent().getIntExtra("huertoId", -1);
+
+        if (huertoId == -1) {
+            Toast.makeText(this, "ID de huerto no válido", Toast.LENGTH_SHORT).show();
+            finish(); // Cerrar actividad si el ID no es válido
+            return;
+        }
+
         // Inicializar el controlador
         plantaController = new PlantaController(this);
 
-        configurarUI();
-
+        configurarUI(huertoId); // Pasar el ID del huerto
     }
 
-    private void configurarUI() {
-        // Configuración del botón para volver al menú
+    private void configurarUI(int huertoId) {
+        // Configuración del botón para guardar la planta
         Button guardarPlantaButton = findViewById(R.id.guardar_planta_button);
         guardarPlantaButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AddPlantaActivity.this, DetalleHuertoActivity.class);
-            //intent.putExtra("user_id", userId); // Pasar el user_id a la siguiente actividad
-            //intent.putExtra("username", nombreUsuario); // Pasar el nombre de usuario a la siguiente actividad
-            boolean plantaAñadida = plantaController.añadirPlanta(tipoSeleccionado);
-            if(plantaAñadida){
-                Toast.makeText(AddPlantaActivity.this, tipoSeleccionado + " añadido correctamente" , Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(AddPlantaActivity.this, "Error añadiendo la planta" , Toast.LENGTH_SHORT).show();
+            if (tipoSeleccionado == null) {
+                Toast.makeText(this, "Selecciona una planta", Toast.LENGTH_SHORT).show();
+                return;
             }
-            startActivity(intent);
+
+            boolean plantaAñadida = plantaController.añadirPlanta(tipoSeleccionado, huertoId);
+            if (plantaAñadida) {
+                Toast.makeText(this, tipoSeleccionado + " añadido correctamente al huerto", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Error añadiendo la planta", Toast.LENGTH_SHORT).show();
+            }
+
+            // Regresar a la actividad anterior
             finish();
         });
 

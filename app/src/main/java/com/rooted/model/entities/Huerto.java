@@ -36,7 +36,6 @@ public class Huerto {
     }
 
     public void agregarPlanta(Planta planta) {
-
         plantas.add(planta);
     }
 

@@ -22,6 +22,7 @@ public class DetalleHuertoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String nombreHuerto = intent.getStringExtra("nombre");
         int sizeHuerto = intent.getIntExtra("size", -1); // Usa -1 como valor por defecto si no se pasa "size"
+        int huertoId = intent.getIntExtra("huertoId", -1);
 
         // Validar datos
         if (nombreHuerto == null || sizeHuerto == -1) {
@@ -33,7 +34,7 @@ public class DetalleHuertoActivity extends AppCompatActivity {
         Button añadirHuertoButton = findViewById(R.id.añadir_planta);
         añadirHuertoButton.setOnClickListener(v -> {
             Intent plantaIntent = new Intent(this, AddPlantaActivity.class);
-            //intent.putExtra("user_id", userId);
+            plantaIntent.putExtra("huertoId", huertoId);
             startActivity(plantaIntent);
         });
 

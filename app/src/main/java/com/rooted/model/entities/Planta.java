@@ -2,13 +2,13 @@ package com.rooted.model.entities;
 
 public class Planta {
     private String nombre;
-    private String tipo;
-    private String fechaCuidado;
+    private int tiempoRiego;
+    private int tiempoCrecimiento;
 
-    public Planta(String nombre, String tipo, String fechaCuidado) {
+    public Planta(String nombre, int tiempoRiego, int tiempoCrecimiento) {
         this.nombre = nombre;
-        this.tipo = tipo;
-        this.fechaCuidado = fechaCuidado;
+        this.tiempoRiego = tiempoRiego;
+        this.tiempoCrecimiento = tiempoCrecimiento;
     }
 
     public String getNombre() {
@@ -19,19 +19,19 @@ public class Planta {
         this.nombre = nombre;
     }
 
-    public String getTipo() {
-        return tipo;
+    public int getTiempoRiego() {
+        return tiempoRiego;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setTiempoRiego(int tiempoRiego) {
+        this.tiempoRiego = tiempoRiego;
     }
 
-    public String getFechaCuidado() {
-        return fechaCuidado;
+    public String getTiempoCrecimiento() {
+        return tiempoCrecimiento;
     }
 
-    public void setFechaCuidado(String fechaCuidado) {
-        this.fechaCuidado = fechaCuidado;
+    public void setTiempoCrecimiento(int tiempoCrecimiento) {
+        this.tiempoCrecimiento = tiempoCrecimiento;
     }
 }

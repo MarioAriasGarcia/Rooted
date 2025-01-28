@@ -24,12 +24,18 @@ public class SoporteActivity extends AppCompatActivity {
     private String tipoSeleccionado; // Tipo seleccionado en el spinner
     private SoporteController soporteController; // Controlador
 
-    int userId = getIntent().getIntExtra("user_id", -1);
-    String nombreUsuario = getIntent().getStringExtra("username");
+    private int userId;
+    private String nombreUsuario;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soporte);
+
+        // Recuperar datos del Intent
+        userId = getIntent().getIntExtra("user_id", -1);
+        nombreUsuario = getIntent().getStringExtra("username");
 
         // Inicializamos el controlador
         soporteController = new SoporteController(this);

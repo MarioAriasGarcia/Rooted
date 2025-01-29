@@ -13,7 +13,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rooted.db";
-    private static final int DATABASE_VERSION = 9; // Incrementar versión para los nuevos cambios
+    private static final int DATABASE_VERSION = 11; // Incrementar versión para los nuevos cambios
 
     // Tabla de usuarios
     private static final String TABLE_USERS = "users";
@@ -53,10 +53,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Tabla de plantas-data, con los datos por cada planta
 
-    private static final String TABLE_PLANTAS_DATA = "datosPlantas";
-    private static final String COLUMN_PLANTA_NOMBRE_DATA = "nombrePlantaData";
-    private static final String COLUMN_TIEMPO_RIEGO_DATA = "tiempoRiegoPlantaData";
-    private static final String COLUMN_TIEMPO_CRECIMIENTO_DATA = "tiempoCrecimientoPlantaData";
+    public static final String TABLE_PLANTAS_DATA = "datosPlantas";
+    public static final String COLUMN_PLANTA_NOMBRE_DATA = "nombrePlantaData";
+    public static final String COLUMN_TIEMPO_RIEGO_DATA = "tiempoRiegoPlantaData";
+    public static final String COLUMN_TIEMPO_CRECIMIENTO_DATA = "tiempoCrecimientoPlantaData";
+
 
 
 
@@ -118,7 +119,77 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TIEMPO_RIEGO_DATA + " INTEGER, " +
                 COLUMN_TIEMPO_CRECIMIENTO_DATA + " INTEGER) ";
         db.execSQL(createPlantasDataTable);
+        // Llamar al método para insertar datos predeterminados
+        insertDefaultPlantData(db);
     }
+
+    private void insertDefaultPlantData(SQLiteDatabase db) {
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Tomate', " + (7 * 24 * 60 * 60) + ", " + (90 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Lechuga', " + (3 * 24 * 60 * 60) + ", " + (60 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Garbanzos', " + (5 * 24 * 60 * 60) + ", " + (120 * 24 * 60 * 60 * 1000) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Pimientos', " + (6 * 24 * 60 * 60) + ", " + (80 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Cebolla', " + (4 * 24 * 60 * 60) + ", " + (150 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Lentejas', " + (5 * 24 * 60 * 60) + ", " + (90 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Frijoles', " + (4 * 24 * 60 * 60) + ", " + (70 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Habas', " + (6 * 24 * 60 * 60) + ", " + (85 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Guisantes', " + (3 * 24 * 60 * 60) + ", " + (60 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Patata', " + (7 * 24 * 60 * 60) + ", " + (120 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Yuca', " + (10 * 24 * 60 * 60) + ", " + (240 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Pepino', " + (3 * 24 * 60 * 60) + ", " + (50 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Calabaza', " + (5 * 24 * 60 * 60) + ", " + (100 * 24 * 60 * 60) + ")");
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {

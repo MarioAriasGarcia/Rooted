@@ -1,5 +1,7 @@
 package com.rooted.model.entities;
 
+import com.rooted.model.DAOs.PlantaDAO;
+
 public class Planta {
     private String nombre;
     private int tiempoRiego;
@@ -27,8 +29,8 @@ public class Planta {
         this.tiempoRiego = tiempoRiego;
     }
 
-    public String getTiempoCrecimiento() {
-        return tiempoCrecimiento;
+    public int getTiempoCrecimiento() {
+        return this.tiempoCrecimiento;
     }
 
     public void setTiempoCrecimiento(int tiempoCrecimiento) {

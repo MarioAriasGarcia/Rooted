@@ -48,4 +48,26 @@ public class HuertoDAO {
         }
         return huertos;
     }
+
+    // Obtener un huerto por su ID
+    public Huerto getHuertoById(int huertoId) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Huerto huerto = null;
+
+        // Consultar el huerto por su ID
+        Cursor cursor = db.rawQuery("SELECT * FROM huertos WHERE id = ?", new String[]{String.valueOf(huertoId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            // Extraer datos del cursor
+            String nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"));
+            int size = cursor.getInt(cursor.getColumnIndexOrThrow("size"));
+
+            // Crear instancia del huerto
+            huerto = new Huerto(huertoId, nombre, size);
+            cursor.close();
+        }
+
+        return huerto; // Devuelve el huerto o null si no se encontró
+    }
+
 }

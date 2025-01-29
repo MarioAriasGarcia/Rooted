@@ -16,6 +16,7 @@ import com.rooted.R;
 import com.rooted.controller.HuertoController;
 import com.rooted.controller.PlantaController;
 import com.rooted.controller.SoporteController;
+import com.rooted.model.entities.Planta;
 import com.rooted.ui.theme.MainActivity;
 
 import java.util.ArrayList;
@@ -56,16 +57,23 @@ public class AddPlantaActivity extends AppCompatActivity{
                 return;
             }
 
-            boolean plantaAñadida = plantaController.añadirPlanta(tipoSeleccionado, huertoId);
-            if (plantaAñadida) {
+            Planta nuevaPlanta = plantaController.añadirPlanta(tipoSeleccionado, huertoId);
+            if (nuevaPlanta != null) {
                 Toast.makeText(this, tipoSeleccionado + " añadido correctamente al huerto", Toast.LENGTH_SHORT).show();
+
+                // Devolver datos a la actividad anterior
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("plantaNombre", nuevaPlanta.getNombre());
+                setResult(RESULT_OK, resultIntent);
             } else {
                 Toast.makeText(this, "Error añadiendo la planta", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_CANCELED);
             }
 
-            // Regresar a la actividad anterior
+            // Finalizar actividad
             finish();
         });
+
 
         // Configuración del spinner
         Spinner spinner = findViewById(R.id.spinner_plantas);

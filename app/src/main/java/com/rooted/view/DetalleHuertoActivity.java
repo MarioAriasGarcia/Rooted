@@ -3,15 +3,43 @@ package com.rooted.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.GridLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
-import com.rooted.ui.theme.MainActivity;
+import com.rooted.controller.PlantaController;
+import com.rooted.model.entities.Planta;
+
+import java.util.List;
 
 public class DetalleHuertoActivity extends AppCompatActivity {
+    private PlantaController plantaController;
+    private GridLayout listaPlantasLayout;
+    private int huertoId;
+
+    // Crear el ActivityResultLauncher para manejar el resultado de añadir una planta
+    private final ActivityResultLauncher<Intent> addPlantaLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<androidx.activity.result.ActivityResult>() {
+                @Override
+                public void onActivityResult(androidx.activity.result.ActivityResult result) {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        String plantaNombre = result.getData().getStringExtra("plantaNombre");
+                        if (plantaNombre != null) {
+                            addPlantaButton(plantaNombre);
+                        }
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +50,7 @@ public class DetalleHuertoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String nombreHuerto = intent.getStringExtra("nombre");
         int sizeHuerto = intent.getIntExtra("size", -1); // Usa -1 como valor por defecto si no se pasa "size"
-        int huertoId = intent.getIntExtra("huertoId", -1);
+        huertoId = intent.getIntExtra("huertoId", -1);
 
         // Validar datos
         if (nombreHuerto == null || sizeHuerto == -1) {
@@ -31,27 +59,119 @@ public class DetalleHuertoActivity extends AppCompatActivity {
             return;
         }
 
-        Button añadirHuertoButton = findViewById(R.id.añadir_planta);
-        añadirHuertoButton.setOnClickListener(v -> {
+        // Inicializar el controlador
+        plantaController = new PlantaController(this);
+
+        // Referencias a los elementos de la interfaz
+        TextView nombreTextView = findViewById(R.id.nombre_huerto);
+        TextView sizeTextView = findViewById(R.id.size_huerto);
+        listaPlantasLayout = findViewById(R.id.lista_plantas_layout);
+
+        // Configurar los textos
+        nombreTextView.setText(nombreHuerto);
+        sizeTextView.setText("Tamaño del huerto: " + sizeHuerto + " m²");
+
+        // Configurar botón para añadir planta
+        Button añadirPlantaButton = findViewById(R.id.añadir_planta);
+        añadirPlantaButton.setOnClickListener(v -> {
             Intent plantaIntent = new Intent(this, AddPlantaActivity.class);
             plantaIntent.putExtra("huertoId", huertoId);
-            startActivity(plantaIntent);
+            // Lanzar la actividad para obtener el resultado
+            addPlantaLauncher.launch(plantaIntent);
         });
-
-        // Mostrar el nombre del huerto
-        TextView nombreTextView = findViewById(R.id.nombre_huerto);
-        nombreTextView.setText(nombreHuerto);
-
-        // Mostrar el tamaño del huerto
-        TextView sizeTextView = findViewById(R.id.size_huerto); // Asegúrate de que este ID exista en el layout
-        sizeTextView.setText("Tamaño del huerto: " + String.valueOf(sizeHuerto) + " m^2"); // Convertir entero a cadena
 
         // Configurar botón para volver al menú
         Button volverMenuButton = findViewById(R.id.volver_atras_button);
-        volverMenuButton.setOnClickListener(v -> {
-            Intent mainIntent = new Intent(DetalleHuertoActivity.this, MainActivity.class);
-            startActivity(mainIntent);
-            finish();
+        volverMenuButton.setOnClickListener(v -> finish());
+
+        // Mostrar plantas registradas
+        mostrarPlantasUsuario(huertoId);
+    }
+
+    // Método para mostrar las plantas del huerto
+    private void mostrarPlantasUsuario(int huertoId) {
+        List<Planta> plantas = plantaController.obtenerPlantasPorHuerto(huertoId);
+
+        if (plantas.isEmpty()) {
+            TextView sinPlantas = new TextView(this);
+            sinPlantas.setText("No tienes plantas registradas");
+            listaPlantasLayout.addView(sinPlantas);
+        } else {
+            for (Planta planta : plantas) {
+                addPlantaButton(planta.getNombre());
+            }
+        }
+    }
+
+    // Método para agregar un botón con la planta añadida
+    private void addPlantaButton(String plantaNombre) {
+        // Crear un nuevo ImageButton
+        ImageButton plantaButton = new ImageButton(this);
+
+        // Establecer imagen según el nombre de la planta
+        int imageResId = obtenerImagenPlanta(plantaNombre);
+        plantaButton.setImageResource(imageResId);
+
+        // Estilo del botón (fondo transparente y sin bordes)
+        plantaButton.setBackground(null);
+        plantaButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+        // Convertir dp a px para definir tamaño
+        int sizeInDp = 100;
+        int sizeInPx = (int) (sizeInDp * getResources().getDisplayMetrics().density);
+
+        // Configurar parámetros de Layout para GridLayout
+        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+        params.width = sizeInPx;
+        params.height = sizeInPx;
+        params.setMargins(16, 16, 16, 16);
+
+        plantaButton.setLayoutParams(params);
+
+        // Configurar funcionalidad del botón
+        plantaButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Has seleccionado " + plantaNombre, Toast.LENGTH_SHORT).show();
         });
+
+        // Añadir el botón al GridLayout
+        listaPlantasLayout.addView(plantaButton);
+    }
+
+
+    /**
+     * Método para obtener la imagen correspondiente a la planta.
+     */
+    private int obtenerImagenPlanta(String plantaNombre) {
+        switch (plantaNombre.toLowerCase()) {
+            case "tomate":
+                return R.drawable.tomate;
+            case "lechuga":
+                return R.drawable.lechuga;
+            case "garbanzos":
+                return R.drawable.garbanzos;
+            case "pimientos":
+                return R.drawable.pimiento;
+            case "cebolla":
+                return R.drawable.cebolla;
+            case "lentejas":
+                return R.drawable.lentejas;
+            case "frijoles":
+                return R.drawable.frijoles;
+            case "habas":
+                return R.drawable.habas;
+            case "guisantes":
+                return R.drawable.guisantes;
+            case "patata":
+                return R.drawable.patata;
+            case "yuca":
+                return R.drawable.yuca;
+            case "pepino":
+                return R.drawable.pepino;
+            case "calabaza":
+                return R.drawable.calabaza;
+            default:
+                return R.drawable.default_fruta; // Imagen por defecto si no hay coincidencia
+        }
+
     }
 }

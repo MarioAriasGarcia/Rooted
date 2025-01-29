@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg">
+    android:background="@drawable/login_bg"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <LinearLayout
+    <!-- Título fijo -->
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_height="50dp"
+        android:fontFamily="sans-serif"
+        android:text="Gestión de Huertos"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
 
-        <TextView
+    <!-- Contenedor del ScrollView para el contenido que puede desplazarse -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:fontFamily="sans-serif"
-            android:text="Gestión de Huertos"
-            android:textAlignment="center"
-            android:textSize="35sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp"/>
+            android:layout_height="334dp"
+            android:layout_weight="1">
 
-        <!-- Contenedor dinámico para la lista de huertos -->
-        <LinearLayout
-            android:id="@+id/lista_huertos_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/color_button"
-            android:textAllCaps="false"
-            android:layout_marginBottom="20dp"/>
+            <!-- Contenedor dinámico para la lista de huertos -->
+            <LinearLayout
+                android:id="@+id/lista_huertos_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/color_button"
+                android:textAllCaps="false"
+                android:layout_marginBottom="20dp"/>
+        </ScrollView>
 
         <Button
             android:id="@+id/añadir_huerto_1"
@@ -52,5 +56,4 @@
             android:background="@drawable/rounded_rectangle"
             android:backgroundTint="#DAFFAD"
             android:text="Volver al Menú Principal"/>
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

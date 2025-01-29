@@ -2,6 +2,7 @@ package com.rooted.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -24,6 +25,8 @@ import java.util.List;
 public class DetalleHuertoActivity extends AppCompatActivity {
     private PlantaController plantaController;
     private GridLayout listaPlantasLayout;
+    private TextView mensajeSinPlantas;
+
     private int huertoId;
 
     // Crear el ActivityResultLauncher para manejar el resultado de añadir una planta
@@ -67,6 +70,17 @@ public class DetalleHuertoActivity extends AppCompatActivity {
         TextView sizeTextView = findViewById(R.id.size_huerto);
         listaPlantasLayout = findViewById(R.id.lista_plantas_layout);
 
+        mensajeSinPlantas = findViewById(R.id.mensaje_sin_plantas);
+        if (mensajeSinPlantas == null) {
+            mensajeSinPlantas = new TextView(this);
+            mensajeSinPlantas.setText("No tienes plantas registradas");
+            mensajeSinPlantas.setTextSize(16);
+            mensajeSinPlantas.setPadding(16, 16, 16, 16);
+            listaPlantasLayout.addView(mensajeSinPlantas);
+        }
+
+
+
         // Configurar los textos
         nombreTextView.setText(nombreHuerto);
         sizeTextView.setText("Tamaño del huerto: " + sizeHuerto + " m²");
@@ -93,34 +107,39 @@ public class DetalleHuertoActivity extends AppCompatActivity {
         List<Planta> plantas = plantaController.obtenerPlantasPorHuerto(huertoId);
 
         if (plantas.isEmpty()) {
-            TextView sinPlantas = new TextView(this);
-            sinPlantas.setText("No tienes plantas registradas");
-            listaPlantasLayout.addView(sinPlantas);
+            mensajeSinPlantas.setVisibility(View.VISIBLE); // Mostrar el mensaje si no hay plantas
         } else {
+            mensajeSinPlantas.setVisibility(View.GONE); // Ocultar el mensaje si hay plantas
+//            if (mensajeSinPlantas != null) {
+//                listaPlantasLayout.removeView(mensajeSinPlantas);
+//                mensajeSinPlantas = null;
+//            }
+
             for (Planta planta : plantas) {
                 addPlantaButton(planta.getNombre());
             }
         }
     }
 
+
     // Método para agregar un botón con la planta añadida
     private void addPlantaButton(String plantaNombre) {
-        // Crear un nuevo ImageButton
-        ImageButton plantaButton = new ImageButton(this);
+        // Eliminar mensaje si existe
+        if (mensajeSinPlantas != null) {
+            listaPlantasLayout.removeView(mensajeSinPlantas);
+            mensajeSinPlantas = null;
+        }
 
-        // Establecer imagen según el nombre de la planta
+        // Crear botón dinámico
+        ImageButton plantaButton = new ImageButton(this);
         int imageResId = obtenerImagenPlanta(plantaNombre);
         plantaButton.setImageResource(imageResId);
-
-        // Estilo del botón (fondo transparente y sin bordes)
         plantaButton.setBackground(null);
         plantaButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        // Convertir dp a px para definir tamaño
         int sizeInDp = 100;
         int sizeInPx = (int) (sizeInDp * getResources().getDisplayMetrics().density);
 
-        // Configurar parámetros de Layout para GridLayout
         GridLayout.LayoutParams params = new GridLayout.LayoutParams();
         params.width = sizeInPx;
         params.height = sizeInPx;
@@ -128,14 +147,14 @@ public class DetalleHuertoActivity extends AppCompatActivity {
 
         plantaButton.setLayoutParams(params);
 
-        // Configurar funcionalidad del botón
         plantaButton.setOnClickListener(v -> {
             Toast.makeText(this, "Has seleccionado " + plantaNombre, Toast.LENGTH_SHORT).show();
         });
 
-        // Añadir el botón al GridLayout
         listaPlantasLayout.addView(plantaButton);
     }
+
+
 
 
     /**

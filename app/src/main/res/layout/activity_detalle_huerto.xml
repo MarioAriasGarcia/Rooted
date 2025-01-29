@@ -31,6 +31,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="334dp"
+        android:fillViewport="true"
         android:layout_weight="1">
 
         <GridLayout
@@ -40,8 +41,21 @@
             android:columnCount="3"
             android:padding="8dp"
             android:layout_gravity="center_horizontal"
+            android:rowOrderPreserved="true"
             android:background="@drawable/color_button">
+            <TextView
+                android:id="@+id/mensaje_sin_plantas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:gravity="center"
+                android:text="No tienes plantas registradas"
+                android:textSize="16sp"
+                android:padding="16dp"
+                android:textColor="@color/black" />
         </GridLayout>
+
+
 
     </ScrollView>
 

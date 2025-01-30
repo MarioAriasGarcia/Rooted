@@ -3,6 +3,7 @@ package com.rooted.controller;
 import android.content.Context;
 import com.rooted.model.entities.Usuario;
 import com.rooted.model.DAOs.UsuarioDAO;
+import com.rooted.model.entities.EncriptacionPassword;
 
 public class LoginController {
     private UsuarioDAO usuarioDAO;
@@ -13,6 +14,8 @@ public class LoginController {
 
     // Método para validar las credenciales
     public boolean validateLogin(String username, String password) {
+        String salt = usuarioDAO.getUserSalt(username);
+        String hashPassword = EncriptacionPassword.encryptPassword(password, salt);
         return usuarioDAO.validateUser(username, password);
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.rooted.database.DatabaseHelper;
+import com.rooted.model.entities.EncriptacionPassword;
 
 public class UsuarioDAO {
     private DatabaseHelper databaseHelper;
@@ -43,10 +44,14 @@ public class UsuarioDAO {
     }
 
     public boolean registerUser(String username, String password) {
+        String salt = EncriptacionPassword.generateSalt();
+        String hashPassword = EncriptacionPassword.encryptPassword(password, salt);
+
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("username", username);
         values.put("password", password);
+        values.put("saltTEXT", salt);
 
         long result = db.insert("users", null, values);
         db.close();
@@ -83,5 +88,14 @@ public class UsuarioDAO {
         db.close();
     }
 
-
+    public String getUserSalt(String user){
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        String salt = "";
+        Cursor cursor = db.rawQuery(
+                "SELECT saltTEXT FROM users WHERE username = ?",
+                new String[]{salt}
+        );
+        cursor.close();
+        return salt;
+    }
 }

@@ -21,6 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
+    private static final String COLUMN_SALT = "salt";
 
     // Tabla para saber la ultima sesion
     private static final String TABLE_LAST_LOGIN = "last_login";
@@ -84,7 +85,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String createUsersTable = "CREATE TABLE " + TABLE_USERS + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_USERNAME + " TEXT UNIQUE NOT NULL, " +
-                COLUMN_PASSWORD + " TEXT NOT NULL)";
+                COLUMN_PASSWORD + " TEXT NOT NULL, " +
+                COLUMN_SALT + " TEXT NOT NULL)";
         db.execSQL(createUsersTable);
 
         // Crear tabla para ultimo inicio de sesion

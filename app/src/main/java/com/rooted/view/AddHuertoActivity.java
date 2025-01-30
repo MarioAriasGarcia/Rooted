@@ -1,5 +1,6 @@
 package com.rooted.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +17,16 @@ public class AddHuertoActivity extends AppCompatActivity {
     private EditText nombreHuertoEditText, sizeHuertoEditText;
     private HuertoController huertoController;
 
+    int userId;
+    String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_huerto);
+
+        userId = getIntent().getIntExtra("user_id", -1);
+        username = getIntent().getStringExtra("username");
 
         nombreHuertoEditText = findViewById(R.id.nombre_huerto_edittext);
         sizeHuertoEditText = findViewById(R.id.size_huerto_edittext);
@@ -32,6 +39,18 @@ public class AddHuertoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 agregarHuerto();
+            }
+        });
+
+        Button volverAtrasButton = findViewById(R.id.volver_atras_button);
+        volverAtrasButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddHuertoActivity.this, GestionarHuertosActivity.class);
+                intent.putExtra("user_id", userId); // Pasar el user_id a la siguiente actividad
+                intent.putExtra("username", username); // Pasar el nombre de usuario a la siguiente actividad
+                startActivity(intent);
+                finish();
             }
         });
     }

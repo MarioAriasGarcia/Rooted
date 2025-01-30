@@ -11,13 +11,16 @@ import com.rooted.R;
 
 public class EnciclopediaActivity extends AppCompatActivity {
 
-    int userId = getIntent().getIntExtra("user_id", -1);
-    String nombreUsuario = getIntent().getStringExtra("username");
+    int userId;
+    String nombreUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enciclopedia);
+
+        userId = getIntent().getIntExtra("user_id", -1);
+        nombreUsuario = getIntent().getStringExtra("username");
 
         Button volverMenuButton = findViewById(R.id.volver_menu_button);
         volverMenuButton.setOnClickListener(new View.OnClickListener() {

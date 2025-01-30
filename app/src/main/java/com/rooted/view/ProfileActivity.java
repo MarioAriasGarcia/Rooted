@@ -53,6 +53,8 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ProfileActivity.this, MainActivity.class);
+                intent.putExtra("user_id", userId);
+                intent.putExtra("username", username);
                 startActivity(intent);
                 finish();
             }

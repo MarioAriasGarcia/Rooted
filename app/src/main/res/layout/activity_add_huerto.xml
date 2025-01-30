@@ -34,9 +34,18 @@
 
     <Button
         android:id="@+id/guardar_huerto_button"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="48dp"
         android:text="Guardar Huerto"
+        android:background="@drawable/color_button"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/volver_atras_button"
+        android:layout_width="200dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="350dp"
+        android:text="Volver"
         android:backgroundTint="#DAFFAD"
         android:background="@drawable/rounded_rectangle"
         android:layout_gravity="center_horizontal"/>

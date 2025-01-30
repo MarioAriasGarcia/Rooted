@@ -12,26 +12,36 @@ import com.rooted.view.RegisterActivity;
 
 public class Main extends AppCompatActivity {
 
+    UsuarioDAO usuarioDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        UsuarioDAO usuarioDAO = new UsuarioDAO(this);
+        usuarioDAO = new UsuarioDAO(this);
 
         Intent intent;
         String usernameSesionIniciada = usuarioDAO.readLastLogin();
 
         if (usernameSesionIniciada != null) {
-            intent = new Intent(this, MainActivity.class);
-            intent.putExtra("username", usernameSesionIniciada);
-            intent.putExtra("user_id", usuarioDAO.getUserIdByUsername(usernameSesionIniciada));
+            int userId = usuarioDAO.getUserIdByUsername(usernameSesionIniciada);
 
-        }
-        else {
+            if (userId != -1) {
+                System.out.println("ESTOY EN EL MAIN, antes de ir a la mainactivity, el nombre de usuario y su id son: " + usernameSesionIniciada + " " + userId);
+
+                intent = new Intent(this, MainActivity.class);
+                intent.putExtra("username", usernameSesionIniciada);
+                intent.putExtra("user_id", userId);
+            } else {
+                usuarioDAO.deleteLastLogin();
+                intent = new Intent(this, LoginActivity.class);
+            }
+        } else {
+            usuarioDAO.deleteLastLogin();
             intent = new Intent(this, LoginActivity.class);
         }
 
-        //usuarioDAO.closeConnection();
         startActivity(intent);
         finish();
     }
+
 }

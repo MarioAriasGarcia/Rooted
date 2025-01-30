@@ -16,7 +16,7 @@ public class LoginController {
     public boolean validateLogin(String username, String password) {
         String salt = usuarioDAO.getUserSalt(username);
         String hashPassword = EncriptacionPassword.encryptPassword(password, salt);
-        return usuarioDAO.validateUser(username, password);
+        return usuarioDAO.validateUser(username, hashPassword);
     }
 
     // Método para obtener un usuario

@@ -22,6 +22,11 @@ public class UsuarioDAO {
                 new String[]{username, password}
         );
         boolean isValid = cursor.moveToFirst(); // Existe al menos un usuario con esas credenciales
+        if(isValid){
+            System.out.println("Existe ese nombre de usuario");
+        }else{
+            System.out.println("No existe ese nombre de usuario");
+        }
         cursor.close();
         createLastLogin(username);
         return isValid;
@@ -44,21 +49,46 @@ public class UsuarioDAO {
     }
 
     public boolean registerUser(String username, String password) {
+        // Validar si el nombre de usuario ya está tomado
+        if (isUsernameTaken(username)) {
+            return false; // Devuelve falso si el nombre de usuario ya existe
+        }
+
+        // Generar el salt y la contraseña encriptada
         String salt = EncriptacionPassword.generateSalt();
         String hashPassword = EncriptacionPassword.encryptPassword(password, salt);
 
+        // Insertar el nuevo usuario en la base de datos
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("username", username);
-        values.put("password", password);
-        values.put("saltTEXT", salt);
+        values.put("password", hashPassword); // Guardar la contraseña encriptada
+        values.put("salt", salt);
 
         long result = db.insert("users", null, values);
         db.close();
         return result != -1; // Devuelve true si el registro fue exitoso
     }
 
+
+    public boolean isUsernameTaken(String username) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT username FROM users WHERE username = ?",
+                new String[]{username}
+        );
+
+        boolean exists = cursor.moveToFirst(); // Si hay al menos un registro
+        cursor.close();
+        System.out.println("Verificando si el usuario está en uso: " + username);
+        System.out.println("Resultado de isUsernameTaken: " + exists);
+
+        return exists;
+    }
+
+
     public boolean createLastLogin(String username){
+        deleteLastLogin();
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         ContentValues values = new ContentValues();
 
@@ -88,14 +118,19 @@ public class UsuarioDAO {
         db.close();
     }
 
-    public String getUserSalt(String user){
+    public String getUserSalt(String user) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        String salt = "";
         Cursor cursor = db.rawQuery(
-                "SELECT saltTEXT FROM users WHERE username = ?",
-                new String[]{salt}
+                "SELECT salt FROM users WHERE username = ?",
+                new String[]{user} // Cambiado para usar el parámetro "user"
         );
+
+        String salt = null;
+        if (cursor.moveToFirst()) {
+            salt = cursor.getString(0); // Obtener el valor del salt
+        }
         cursor.close();
         return salt;
     }
+
 }

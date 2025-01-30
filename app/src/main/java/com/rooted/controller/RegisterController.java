@@ -29,4 +29,5 @@ public class RegisterController {
             return "El nombre de usuario ya está en uso";
         }
     }
+
 }

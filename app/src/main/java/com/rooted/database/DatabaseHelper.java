@@ -13,7 +13,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rooted.db";
-    private static final int DATABASE_VERSION = 13; // Incrementar versión para los nuevos cambios
+    private static final int DATABASE_VERSION = 15; // Incrementar versión para los nuevos cambios
     private static DatabaseHelper instance;
 
     // Tabla de usuarios
@@ -214,11 +214,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Eliminar tablas existentes si hay una actualización
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LAST_LOGIN);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MESSAGES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_HUERTOS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTAS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENCICLOPEDIA);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTAS_DATA);
+
         onCreate(db);
     }
 }

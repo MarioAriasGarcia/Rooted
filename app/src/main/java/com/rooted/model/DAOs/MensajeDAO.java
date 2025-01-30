@@ -21,7 +21,7 @@ public class MensajeDAO {
     private DatabaseHelper databaseHelper;
 
     public MensajeDAO(Context context) {
-        this.databaseHelper = new DatabaseHelper(context);
+        databaseHelper = DatabaseHelper.getInstance(context);
     }
 
     // Método para insertar un mensaje

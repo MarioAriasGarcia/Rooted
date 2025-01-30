@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
 import com.rooted.database.DatabaseHelper;
-import com.rooted.ui.theme.MainActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 

@@ -15,7 +15,7 @@ public class PlantaDAO {
     private DatabaseHelper databaseHelper;
 
     public PlantaDAO(Context context){
-        this.databaseHelper = new DatabaseHelper(context);
+        databaseHelper = DatabaseHelper.getInstance(context);
     }
 
     public boolean addPlanta(String planta, int huertoId) {

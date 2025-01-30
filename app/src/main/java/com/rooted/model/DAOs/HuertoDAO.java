@@ -15,7 +15,7 @@ public class HuertoDAO {
     private DatabaseHelper databaseHelper;
 
     public HuertoDAO(Context context) {
-        this.databaseHelper = new DatabaseHelper(context);
+        databaseHelper = DatabaseHelper.getInstance(context);
     }
 
     // Insertar un nuevo huerto

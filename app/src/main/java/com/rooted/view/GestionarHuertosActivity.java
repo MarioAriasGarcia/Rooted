@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.rooted.R;
 import com.rooted.controller.HuertoController;
 import com.rooted.model.entities.Huerto;
-import com.rooted.ui.theme.MainActivity;
 
 import java.util.List;
 
@@ -31,6 +30,7 @@ public class GestionarHuertosActivity extends AppCompatActivity {
         int userId = getIntent().getIntExtra("user_id", -1);
 
         if (username == null || userId == -1) {
+            System.out.println("El nombre de usuario es: " + username + " y mi id es: " + userId);
             Toast.makeText(this, "Error al recuperar datos del usuario", Toast.LENGTH_SHORT).show();
             finish();
             return;

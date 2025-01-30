@@ -13,13 +13,18 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rooted.db";
-    private static final int DATABASE_VERSION = 11; // Incrementar versión para los nuevos cambios
+    private static final int DATABASE_VERSION = 13; // Incrementar versión para los nuevos cambios
+    private static DatabaseHelper instance;
 
     // Tabla de usuarios
     private static final String TABLE_USERS = "users";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
+
+    // Tabla para saber la ultima sesion
+    private static final String TABLE_LAST_LOGIN = "last_login";
+    private static final String COLUMN_LAST_LOGIN_USERNAME = "username";
 
     // Tabla de mensajes
     private static final String TABLE_MESSAGES = "messages";
@@ -65,6 +70,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // Uso de singleton para manejar la base de datos
+    public static DatabaseHelper getInstance(Context context){
+        if(instance == null){
+            instance = new DatabaseHelper(context);
+        }
+        return instance;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Crear tabla de usuarios
@@ -73,6 +86,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_USERNAME + " TEXT UNIQUE NOT NULL, " +
                 COLUMN_PASSWORD + " TEXT NOT NULL)";
         db.execSQL(createUsersTable);
+
+        // Crear tabla para ultimo inicio de sesion
+        String createLastLoginTable = "CREATE TABLE " + TABLE_LAST_LOGIN + " (" +
+                COLUMN_LAST_LOGIN_USERNAME + " TEXT PRIMARY KEY)";
+        db.execSQL(createLastLoginTable);
+
 
         // Crear tabla de mensajes
         String createMessagesTable = "CREATE TABLE " + TABLE_MESSAGES + " (" +
@@ -201,31 +220,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENCICLOPEDIA);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTAS_DATA);
         onCreate(db);
-    }
-
-
-
-    // Métodos para gestionar la tabla de plantas
-    public long insertPlanta(String nombre, int huertoId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_PLANTA_NOMBRE, nombre);
-        values.put(COLUMN_PLANTA_HUERTO_ID, huertoId);
-
-        long result = db.insert(TABLE_PLANTAS, null, values);
-        db.close();
-        return result; // Devuelve el ID de la planta creada
-    }
-
-    public Cursor getPlantasByHuertoId(int huertoId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_PLANTAS + " WHERE " + COLUMN_PLANTA_HUERTO_ID + " = ?", new String[]{String.valueOf(huertoId)});
-    }
-
-    public boolean deletePlanta(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int rows = db.delete(TABLE_PLANTAS, COLUMN_PLANTA_ID + " = ?", new String[]{String.valueOf(id)});
-        db.close();
-        return rows > 0;
     }
 }

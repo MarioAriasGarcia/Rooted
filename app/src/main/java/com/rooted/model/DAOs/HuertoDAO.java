@@ -1,4 +1,4 @@
-package com.rooted.model;
+package com.rooted.model.DAOs;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.rooted.database.DatabaseHelper;
+import com.rooted.model.entities.Huerto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class HuertoDAO {
     private DatabaseHelper databaseHelper;
 
     public HuertoDAO(Context context) {
-        this.databaseHelper = new DatabaseHelper(context);
+        databaseHelper = DatabaseHelper.getInstance(context);
     }
 
     // Insertar un nuevo huerto
@@ -47,4 +48,26 @@ public class HuertoDAO {
         }
         return huertos;
     }
+
+    // Obtener un huerto por su ID
+    public Huerto getHuertoById(int huertoId) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Huerto huerto = null;
+
+        // Consultar el huerto por su ID
+        Cursor cursor = db.rawQuery("SELECT * FROM huertos WHERE id = ?", new String[]{String.valueOf(huertoId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            // Extraer datos del cursor
+            String nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"));
+            int size = cursor.getInt(cursor.getColumnIndexOrThrow("size"));
+
+            // Crear instancia del huerto
+            huerto = new Huerto(huertoId, nombre, size);
+            cursor.close();
+        }
+
+        return huerto; // Devuelve el huerto o null si no se encontró
+    }
+
 }

@@ -9,34 +9,32 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Añadir Nuevo Huerto"
+        android:text="Añadir Nueva Planta"
         android:textAlignment="center"
         android:textSize="35sp"
         android:textColor="@color/black"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
-
-    <EditText
-        android:id="@+id/nombre_huerto_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:hint="Nombre del Huerto"
-        android:inputType="text"
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selecciona la planta a añadir"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/size_huerto_edittext"
+    <Spinner
+        android:id="@+id/spinner_plantas"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:hint="Tamaño del huerto (en m^2)"
-        android:inputType="text"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="50dp"
+        android:spinnerMode="dropdown"
+        />
 
     <Button
-        android:id="@+id/guardar_huerto_button"
+        android:id="@+id/guardar_planta_button"
         android:layout_width="200dp"
         android:layout_height="48dp"
-        android:text="Guardar Huerto"
+        android:text="Guardar planta"
         android:backgroundTint="#DAFFAD"
         android:background="@drawable/rounded_rectangle"
         android:layout_gravity="center_horizontal"/>

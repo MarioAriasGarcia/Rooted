@@ -2,8 +2,8 @@ package com.rooted.controller;
 
 import android.content.Context;
 
-import com.rooted.model.Huerto;
-import com.rooted.model.HuertoDAO;
+import com.rooted.model.entities.Huerto;
+import com.rooted.model.DAOs.HuertoDAO;
 
 import java.util.List;
 
@@ -25,7 +25,6 @@ public class HuertoController {
         if (userId <= 0) {
             throw new IllegalArgumentException("El ID del usuario no es válido.");
         }
-
         return huertoDAO.insertHuerto(nombreHuerto, size, userId);
     }
 

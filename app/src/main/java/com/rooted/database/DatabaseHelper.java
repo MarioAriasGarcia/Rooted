@@ -13,13 +13,18 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rooted.db";
-    private static final int DATABASE_VERSION = 7; // Incrementar versión para los nuevos cambios
+    private static final int DATABASE_VERSION = 13; // Incrementar versión para los nuevos cambios
+    private static DatabaseHelper instance;
 
     // Tabla de usuarios
     private static final String TABLE_USERS = "users";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_USERNAME = "username";
     private static final String COLUMN_PASSWORD = "password";
+
+    // Tabla para saber la ultima sesion
+    private static final String TABLE_LAST_LOGIN = "last_login";
+    private static final String COLUMN_LAST_LOGIN_USERNAME = "username";
 
     // Tabla de mensajes
     private static final String TABLE_MESSAGES = "messages";
@@ -51,10 +56,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_FORMA_PLANTAR = "forma_plantar";
     private static final String COLUMN_FORMA_RECOGER = "forma_recoger";
 
+    //Tabla de plantas-data, con los datos por cada planta
+
+    public static final String TABLE_PLANTAS_DATA = "datosPlantas";
+    public static final String COLUMN_PLANTA_NOMBRE_DATA = "nombrePlantaData";
+    public static final String COLUMN_TIEMPO_RIEGO_DATA = "tiempoRiegoPlantaData";
+    public static final String COLUMN_TIEMPO_CRECIMIENTO_DATA = "tiempoCrecimientoPlantaData";
+
+
 
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    // Uso de singleton para manejar la base de datos
+    public static DatabaseHelper getInstance(Context context){
+        if(instance == null){
+            instance = new DatabaseHelper(context);
+        }
+        return instance;
     }
 
     @Override
@@ -66,13 +87,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_PASSWORD + " TEXT NOT NULL)";
         db.execSQL(createUsersTable);
 
+        // Crear tabla para ultimo inicio de sesion
+        String createLastLoginTable = "CREATE TABLE " + TABLE_LAST_LOGIN + " (" +
+                COLUMN_LAST_LOGIN_USERNAME + " TEXT PRIMARY KEY)";
+        db.execSQL(createLastLoginTable);
+
+
         // Crear tabla de mensajes
         String createMessagesTable = "CREATE TABLE " + TABLE_MESSAGES + " (" +
                 COLUMN_MESSAGE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_MESSAGE_TYPE + " TEXT NOT NULL, " +
                 COLUMN_MESSAGE_SUBTYPE + " TEXT, " +
-                COLUMN_MESSAGE_CONTENT + " TEXT NOT NULL)";
-                //FECHA + " INTEGER NOT NULL)";
+                COLUMN_MESSAGE_CONTENT + " TEXT NOT NULL, "+
+                FECHA + " INTEGER NOT NULL)";
         db.execSQL(createMessagesTable);
 
         // Crear tabla de huertos
@@ -103,7 +130,85 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_FORMA_PLANTAR + " TEXT NOT NULL, " +
                 COLUMN_FORMA_RECOGER + " TEXT NOT NULL) " ;
         db.execSQL(createEnciclopediaTable);
+
+        // Crear tabla de datos de plantas
+        String createPlantasDataTable = "CREATE TABLE " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_PLANTA_NOMBRE_DATA + " TEXT NOT NULL, " +
+                COLUMN_TIEMPO_RIEGO_DATA + " INTEGER, " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + " INTEGER) ";
+        db.execSQL(createPlantasDataTable);
+        // Llamar al método para insertar datos predeterminados
+        insertDefaultPlantData(db);
     }
+
+    private void insertDefaultPlantData(SQLiteDatabase db) {
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Tomate', " + (7 * 24 * 60 * 60) + ", " + (90 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Lechuga', " + (3 * 24 * 60 * 60) + ", " + (60 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Garbanzos', " + (5 * 24 * 60 * 60) + ", " + (120 * 24 * 60 * 60 * 1000) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Pimientos', " + (6 * 24 * 60 * 60) + ", " + (80 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Cebolla', " + (4 * 24 * 60 * 60) + ", " + (150 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Lentejas', " + (5 * 24 * 60 * 60) + ", " + (90 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Frijoles', " + (4 * 24 * 60 * 60) + ", " + (70 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Habas', " + (6 * 24 * 60 * 60) + ", " + (85 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Guisantes', " + (3 * 24 * 60 * 60) + ", " + (60 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Patata', " + (7 * 24 * 60 * 60) + ", " + (120 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Yuca', " + (10 * 24 * 60 * 60) + ", " + (240 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Pepino', " + (3 * 24 * 60 * 60) + ", " + (50 * 24 * 60 * 60) + ")");
+
+        db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
+                COLUMN_PLANTA_NOMBRE_DATA + ", " +
+                COLUMN_TIEMPO_RIEGO_DATA + ", " +
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Calabaza', " + (5 * 24 * 60 * 60) + ", " + (100 * 24 * 60 * 60) + ")");
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -113,172 +218,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_HUERTOS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTAS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENCICLOPEDIA);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTAS_DATA);
         onCreate(db);
-    }
-
-    // Registrar un nuevo usuario
-//    public boolean registerUser(String username, String password) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COLUMN_USERNAME, username);
-//        values.put(COLUMN_PASSWORD, password);
-//
-//        long result = db.insert(TABLE_USERS, null, values);
-//        db.close();
-//        return result != -1; // Devuelve true si se registra correctamente
-//    }
-
-    // Validar usuario durante el inicio de sesión
-//    public boolean validateUser(String username, String password) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " +
-//                COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
-//        Cursor cursor = db.rawQuery(query, new String[]{username, password});
-//
-//        boolean isValid = cursor.getCount() > 0;
-//        cursor.close();
-//        db.close();
-//        return isValid;
-//    }
-
-//    public int getUserIdByUsername(String username) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String query = "SELECT " + COLUMN_ID + " FROM " + TABLE_USERS + " WHERE " + COLUMN_USERNAME + " = ?";
-//        Cursor cursor = db.rawQuery(query, new String[]{username});
-//        int userId = -1;
-//        if (cursor.moveToFirst()) {
-//            userId = cursor.getInt(0);
-//        }
-//        cursor.close();
-//        db.close();
-//        return userId;
-//    }
-
-
-    // Métodos para manejar la tabla de mensajes
-//    public boolean insertMessage(String messageType, String messageSubtype, String messageContent) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COLUMN_MESSAGE_TYPE, messageType);
-//        values.put(COLUMN_MESSAGE_SUBTYPE, messageSubtype);
-//        values.put(COLUMN_MESSAGE_CONTENT, messageContent);
-//
-//        long result = db.insert(TABLE_MESSAGES, null, values);
-//        db.close();
-//        return result != -1; // Devuelve true si la inserción fue exitosa
-//    }
-
-//    public Cursor getAllMessages() {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String query = "SELECT * FROM " + TABLE_MESSAGES;
-//        return db.rawQuery(query, null);
-//    }
-
-    // Métodos para gestionar la tabla de huertos
-
-//    public long insertHuerto(String nombre, int size, int userId) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COLUMN_HUERTO_NOMBRE, nombre);
-//        values.put(COLUMN_HUERTO_SIZE, size);
-//        values.put("user_id", userId); // Asociar el huerto al usuario
-//
-//        long result = db.insert(TABLE_HUERTOS, null, values);
-//        db.close();
-//        return result; // Devuelve el ID del huerto creado
-//    }
-//
-//    public Cursor getHuertosByUserId(int userId) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        String query = "SELECT * FROM " + TABLE_HUERTOS + " WHERE user_id = ?";
-//        return db.rawQuery(query, new String[]{String.valueOf(userId)});
-//    }
-//
-//
-//
-//    public Cursor getAllHuertos() {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        return db.rawQuery("SELECT * FROM " + TABLE_HUERTOS, null);
-//    }
-//
-//    public Cursor getHuertoById(int id) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        return db.rawQuery("SELECT * FROM " + TABLE_HUERTOS + " WHERE " + COLUMN_HUERTO_ID + " = ?", new String[]{String.valueOf(id)});
-//    }
-//
-//    public boolean updateHuerto(int id, String nombre, int size) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COLUMN_HUERTO_NOMBRE, nombre);
-//        values.put(COLUMN_HUERTO_SIZE, size);
-//
-//        int rows = db.update(TABLE_HUERTOS, values, COLUMN_HUERTO_ID + " = ?", new String[]{String.valueOf(id)});
-//        db.close();
-//        return rows > 0;
-//    }
-//
-//    public boolean deleteHuerto(int id) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        int rows = db.delete(TABLE_HUERTOS, COLUMN_HUERTO_ID + " = ?", new String[]{String.valueOf(id)});
-//        db.close();
-//        return rows > 0;
-//    }
-//
-//    public void agregarHuerto(String nombreHuerto, int size, int userId) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put(COLUMN_HUERTO_NOMBRE, nombreHuerto);
-//        values.put(COLUMN_HUERTO_SIZE, size); // Ahora incluye el tamaño
-//        values.put("user_id", userId); // Asocia el huerto al usuario
-//        long result = db.insert(TABLE_HUERTOS, null, values);
-//        db.close();
-//
-//        // Mensaje de log para verificar si la inserción fue exitosa
-//        if (result == -1) {
-//            Log.e("DatabaseHelper", "Error al insertar el huerto: " + nombreHuerto);
-//        } else {
-//            Log.d("DatabaseHelper", "Huerto añadido correctamente, ID: " + result);
-//        }
-//    }
-//
-//
-//
-//    public List<String> obtenerListaHuertos() {
-//        List<String> huertos = new ArrayList<>();
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.rawQuery("SELECT nombre FROM huertos", null);
-//        if (cursor.moveToFirst()) {
-//            do {
-//                huertos.add(cursor.getString(0));
-//            } while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        db.close();
-//        return huertos;
-//    }
-
-
-    // Métodos para gestionar la tabla de plantas
-    public long insertPlanta(String nombre, int huertoId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_PLANTA_NOMBRE, nombre);
-        values.put(COLUMN_PLANTA_HUERTO_ID, huertoId);
-
-        long result = db.insert(TABLE_PLANTAS, null, values);
-        db.close();
-        return result; // Devuelve el ID de la planta creada
-    }
-
-    public Cursor getPlantasByHuertoId(int huertoId) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_PLANTAS + " WHERE " + COLUMN_PLANTA_HUERTO_ID + " = ?", new String[]{String.valueOf(huertoId)});
-    }
-
-    public boolean deletePlanta(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int rows = db.delete(TABLE_PLANTAS, COLUMN_PLANTA_ID + " = ?", new String[]{String.valueOf(id)});
-        db.close();
-        return rows > 0;
     }
 }

@@ -1,8 +1,8 @@
 package com.rooted.controller;
 
 import android.content.Context;
-import com.rooted.model.Usuario;
-import com.rooted.model.UsuarioDAO;
+import com.rooted.model.entities.Usuario;
+import com.rooted.model.DAOs.UsuarioDAO;
 
 public class LoginController {
     private UsuarioDAO usuarioDAO;

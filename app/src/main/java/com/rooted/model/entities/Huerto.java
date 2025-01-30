@@ -1,4 +1,4 @@
-package com.rooted.model;
+package com.rooted.model.entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,6 @@ public class Huerto {
     }
 
     public void agregarPlanta(Planta planta) {
-
         plantas.add(planta);
     }
 

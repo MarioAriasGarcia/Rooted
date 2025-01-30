@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
 import com.rooted.database.DatabaseHelper;
-import com.rooted.ui.theme.MainActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -45,8 +44,8 @@ public class ProfileActivity extends AppCompatActivity {
         TextView userIdTextView = findViewById(R.id.user_id); // ID del TextView para "ID de usuario"
 
         // Establecer los valores en los TextViews
-        usernameTextView.setText("Nombre de usuario: " + username);
-        userIdTextView.setText("ID de usuario: " + userId);
+        usernameTextView.setText("" + username);
+        userIdTextView.setText("" + userId);
 
         // Configurar el botón para volver al menú principal
         Button volverMenuButton = findViewById(R.id.volver_menu_button);

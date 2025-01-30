@@ -1,4 +1,4 @@
-package com.rooted.model;
+package com.rooted.model.entities;
 
 public class MensajeSoporte extends Mensaje {
     private String aspectosMejorables; // Información sobre sugerencias/mejoras

@@ -10,8 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
 import com.rooted.controller.LoginController;
-import com.rooted.model.Usuario;
-import com.rooted.ui.theme.MainActivity;
+import com.rooted.model.entities.Usuario;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText usernameInput, passwordInput;
@@ -45,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 boolean isValid = loginController.validateLogin(username, password);
                 if (isValid) {
                     Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(LoginActivity.this, "Bienvenido, usuario: " + username , Toast.LENGTH_SHORT).show();
                     // Obtener información del usuario
                     Usuario usuario = loginController.getUserByUsername(username);
 

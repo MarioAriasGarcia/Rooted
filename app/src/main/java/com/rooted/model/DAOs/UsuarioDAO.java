@@ -1,4 +1,4 @@
-package com.rooted.model;
+package com.rooted.model.DAOs;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,7 +10,7 @@ public class UsuarioDAO {
     private DatabaseHelper databaseHelper;
 
     public UsuarioDAO(Context context) {
-        this.databaseHelper = new DatabaseHelper(context);
+        databaseHelper = DatabaseHelper.getInstance(context);
     }
 
     // Validar credenciales de usuario
@@ -22,6 +22,7 @@ public class UsuarioDAO {
         );
         boolean isValid = cursor.moveToFirst(); // Existe al menos un usuario con esas credenciales
         cursor.close();
+        createLastLogin(username);
         return isValid;
     }
 
@@ -51,4 +52,36 @@ public class UsuarioDAO {
         db.close();
         return result != -1; // Devuelve true si el registro fue exitoso
     }
+
+    public boolean createLastLogin(String username){
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("username", username);
+        long result = db.insert("last_login", null, values);
+        return result != -1; // Devuelve true si el registro fue exitoso
+    }
+
+    public String readLastLogin() {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        String lastUser = null;
+
+        Cursor cursor = db.rawQuery("SELECT username FROM last_login", null);
+        if (cursor.moveToFirst()) {
+            lastUser = cursor.getString(0);
+        }
+        cursor.close();
+        db.close();
+
+        return lastUser;
+    }
+
+    public void deleteLastLogin() {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        // Elimina todos los registros de usuarios almacenados para simular un cierre de sesión
+        db.execSQL("DELETE FROM last_login");
+        db.close();
+    }
+
+
 }

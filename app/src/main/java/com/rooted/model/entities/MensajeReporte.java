@@ -1,4 +1,4 @@
-package com.rooted.model;
+package com.rooted.model.entities;
 
 public class MensajeReporte extends Mensaje {
     private String tipoError; // Tipo de error reportado

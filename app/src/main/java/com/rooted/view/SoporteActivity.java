@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
 import com.rooted.controller.SoporteController;
-import com.rooted.ui.theme.MainActivity;
 
 import java.util.ArrayList;
 
@@ -24,10 +23,18 @@ public class SoporteActivity extends AppCompatActivity {
     private String tipoSeleccionado; // Tipo seleccionado en el spinner
     private SoporteController soporteController; // Controlador
 
+    private int userId;
+    private String nombreUsuario;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_soporte);
+
+        // Recuperar datos del Intent
+        userId = getIntent().getIntExtra("user_id", -1);
+        nombreUsuario = getIntent().getStringExtra("username");
 
         // Inicializamos el controlador
         soporteController = new SoporteController(this);
@@ -41,6 +48,8 @@ public class SoporteActivity extends AppCompatActivity {
         Button volverMenuButton = findViewById(R.id.volver_menu_button);
         volverMenuButton.setOnClickListener(v -> {
             Intent intent = new Intent(SoporteActivity.this, MainActivity.class);
+            intent.putExtra("user_id", userId); // Pasar el user_id a la siguiente actividad
+            intent.putExtra("username", nombreUsuario); // Pasar el nombre de usuario a la siguiente actividad
             startActivity(intent);
             finish();
         });

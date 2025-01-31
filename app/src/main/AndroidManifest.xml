@@ -78,6 +78,11 @@
             android:exported="true"
             android:theme="@style/Theme.Rooted">
         </activity>
+        <activity
+            android:name=".view.EnciclopediaPantaActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Rooted">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

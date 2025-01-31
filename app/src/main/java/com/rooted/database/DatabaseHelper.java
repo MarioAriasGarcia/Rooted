@@ -50,12 +50,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PLANTA_HUERTO_ID = "huerto_id"; // Clave foránea
 
     // Tabla de plantas-enciclopedia
-    private static final String TABLE_ENCICLOPEDIA = "enciclopedia";
-    private static final String COLUMN_PLANTA_NOMBRE_E = "nombre";
-    private static final String COLUMN_PLANTA_DESC = "descripcion";
-    private static final String COLUMN_RIEGO = "riego";
-    private static final String COLUMN_FORMA_PLANTAR = "forma_plantar";
-    private static final String COLUMN_FORMA_RECOGER = "forma_recoger";
+    public static final String TABLE_ENCICLOPEDIA = "enciclopedia";
+    public static final String COLUMN_PLANTA_NOMBRE_E = "nombre";
+    public static final String COLUMN_PLANTA_DESC = "descripcion";
+    public static final String COLUMN_RIEGO = "riego";
+    public static final String COLUMN_FORMA_PLANTAR = "forma_plantar";
+    public static final String COLUMN_FORMA_RECOGER = "forma_recoger";
 
     //Tabla de plantas-data, con los datos por cada planta
 
@@ -158,7 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Garbanzos', " + (5 * 24 * 60 * 60) + ", " + (120 * 24 * 60 * 60 * 1000) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Garbanzos', " + (5 * 24 * 60 * 60) + ", " + (120 * 24 * 60 * 60) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +

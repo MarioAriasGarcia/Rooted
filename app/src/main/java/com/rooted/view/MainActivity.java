@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         // Verificar que el user_id sea válido
         if (userId == -1) {
             Toast.makeText(this, "Error: No se pudo cargar el ID del usuario", Toast.LENGTH_SHORT).show();
+            System.out.println("ESTOY EN MAINACTIVITY, El nombre del usuario es: " + nombreUsuario + " y su id es: " + userId);
+
             finish(); // Finalizar actividad si no hay un user_id válido
             return;
         }

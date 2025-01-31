@@ -4,15 +4,37 @@ import java.util.ArrayList;
 
 public class Enciclopedia {
 
-    ArrayList<EntradasEnciclopedia> entradasEncliclopedia;
+    private ArrayList<EntradasEnciclopedia> entradasEnciclopedia;
+
+    public static Enciclopedia instance;
     public Enciclopedia(){
-        entradasEncliclopedia = new ArrayList<EntradasEnciclopedia>();
+        entradasEnciclopedia = new ArrayList<EntradasEnciclopedia>();
+        rellenarEnciclopedia();
+    }
+
+    public Enciclopedia getInstance(){
+        if (instance==null){
+            instance = new Enciclopedia();
+        }
+        return instance;
     }
 
    public void addEntrada(EntradasEnciclopedia entrada){
-        this.entradasEncliclopedia.add(entrada);
+        this.entradasEnciclopedia.add(entrada);
    }
 
+
+   public EntradasEnciclopedia buscarPlanta(String nombrePlanta){
+       EntradasEnciclopedia entrada = null;
+        for (int i = 0; i<entradasEnciclopedia.size(); i++){
+            if (entradasEnciclopedia.get(i).getNombre().equals(nombrePlanta)){
+                entrada = entradasEnciclopedia.get(i);
+            }
+        }
+
+
+        return entrada;
+   }
    public void rellenarEnciclopedia(){
 
        EntradasEnciclopedia Tomate = new EntradasEnciclopedia("Tomate",

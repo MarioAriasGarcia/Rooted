@@ -19,29 +19,28 @@
         android:textStyle="bold" />
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selecciona la planta a añadir"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+
+    <Spinner
+        android:id="@+id/spinner_buscar_plantas"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="sans-serif"
-        android:text="A continuación escribe la palabra de la que quieres obtener información."
-        android:textSize="15sp"
-        android:textStyle="bold" />
-    <EditText
-        android:id="@+id/PlantaABuscar"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:hint="Planta que quieres buscar" />
+        android:spinnerMode="dropdown"
+        />
 
     <Button
-        android:id="@+id/enviar_button"
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
+        android:id="@+id/buscar_planta_button"
+        android:layout_width="200dp"
         android:layout_height="48dp"
-        android:backgroundTint="@color/white"
+        android:text="Buscar planta"
+        android:backgroundTint="#DAFFAD"
         android:background="@drawable/rounded_rectangle"
-        android:text="Enviar" />
+        android:layout_gravity="center_horizontal"/>
 
     <Button
         android:id="@+id/volver_menu_button"

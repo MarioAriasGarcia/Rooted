@@ -13,7 +13,7 @@ import com.rooted.model.DAOs.PlantaDAO;
 import java.util.List;
 public class EnciclopediaController {
 
-    private Enciclopedia enciclopedia;
+    private Enciclopedia enciclopedia = new Enciclopedia();
 
     public EnciclopediaController() {
         this.enciclopedia = enciclopedia.getInstance();

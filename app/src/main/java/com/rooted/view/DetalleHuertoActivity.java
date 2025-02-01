@@ -1,5 +1,6 @@
 package com.rooted.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,16 +8,17 @@ import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
+import com.rooted.controller.HuertoController;
 import com.rooted.controller.PlantaController;
 import com.rooted.model.entities.Planta;
 
@@ -24,6 +26,7 @@ import java.util.List;
 
 public class DetalleHuertoActivity extends AppCompatActivity {
     private PlantaController plantaController;
+    private HuertoController huertoController;
     private GridLayout listaPlantasLayout;
     private TextView mensajeSinPlantas;
 
@@ -93,6 +96,10 @@ public class DetalleHuertoActivity extends AppCompatActivity {
             // Lanzar la actividad para obtener el resultado
             addPlantaLauncher.launch(plantaIntent);
         });
+
+        // Configurar botón para borrar huerto
+        Button eliminarHuertoButton = findViewById(R.id.eliminar_huerto);
+
 
         // Configurar botón para volver al menú
         Button volverMenuButton = findViewById(R.id.volver_atras_button);
@@ -192,5 +199,27 @@ public class DetalleHuertoActivity extends AppCompatActivity {
                 return R.drawable.default_fruta; // Imagen por defecto si no hay coincidencia
         }
 
+    }
+
+
+    private void eliminarHuerto() {
+        huertoController = new HuertoController(this);
+        new AlertDialog.Builder(this)
+                .setTitle("Confirmar eliminación")
+                .setMessage("¿Estás seguro de que deseas eliminar este huerto? Esta acción no se puede deshacer.")
+                .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        boolean isDeleted = huertoController.eliminarHuerto(huertoId);
+                        if (isDeleted) {
+                            Toast.makeText(DetalleHuertoActivity.this, "Huerto eliminado exitosamente", Toast.LENGTH_SHORT).show();
+                            finish(); // Finalizar la actividad actual
+                        } else {
+                            Toast.makeText(DetalleHuertoActivity.this, "Error al eliminar el huerto", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
     }
 }

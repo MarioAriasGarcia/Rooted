@@ -70,4 +70,11 @@ public class HuertoDAO {
         return huerto; // Devuelve el huerto o null si no se encontró
     }
 
+    public boolean eliminarHuerto(int huertoId) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        int rowsDeleted = db.delete("huertos", "id = ?", new String[]{String.valueOf(huertoId)});
+        return rowsDeleted > 0; // Devuelve true si se eliminó al menos una fila
+    }
+
+
 }

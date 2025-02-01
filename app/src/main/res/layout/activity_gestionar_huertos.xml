@@ -40,7 +40,7 @@
         <Button
             android:id="@+id/añadir_huerto_1"
             android:layout_width="350dp"
-            android:layout_height="120dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/color_button"
             android:text="Añadir Nuevo Huerto"

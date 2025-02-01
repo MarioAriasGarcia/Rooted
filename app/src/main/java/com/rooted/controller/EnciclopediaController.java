@@ -21,7 +21,6 @@ public class EnciclopediaController {
     }
 
     public  EntradasEnciclopedia buscarPlanta(String tipoPlanta) {
-
         return enciclopedia.buscarPlanta(tipoPlanta);
     }
 

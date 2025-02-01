@@ -2,12 +2,14 @@ package com.rooted.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.rooted.R;
 import com.rooted.controller.HuertoController;
@@ -63,11 +65,47 @@ public class GestionarHuertosActivity extends AppCompatActivity {
         if (huertos.isEmpty()) {
             TextView sinHuertos = new TextView(this);
             sinHuertos.setText("No tienes huertos registrados");
+            sinHuertos.setTextSize(18); // Tamaño del texto
+            sinHuertos.setAllCaps(false); // Sin mayúsculas
+            sinHuertos.setElevation(6); // Sombra para profundidad
+
+            // Crear un objeto LayoutParams con márgenes
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,  // Ancho ajustable
+                    LinearLayout.LayoutParams.WRAP_CONTENT   // Alto ajustable
+            );
+
+            // Establecer márgenes (en píxeles)
+            int margen = 16; // Ejemplo de 16px de margen
+            params.setMargins(margen, margen, margen, margen); // Margen para los cuatro lados
+
+            // Aplicar los parámetros al TextView
+            sinHuertos.setLayoutParams(params);
+
+            // Agregar el TextView a tu layout
             listaHuertosLayout.addView(sinHuertos);
-        } else {
+        }
+        else {
             for (Huerto huerto : huertos) {
                 Button huertoButton = new Button(this);
                 huertoButton.setText(huerto.getNombre());
+                huertoButton.setTextColor(ContextCompat.getColor(this, R.color.white)); // Color del texto
+                huertoButton.setPadding(20, 20, 20, 20); // Padding interno
+                huertoButton.setBackgroundResource(R.drawable.custom_bg_boton); // Fondo personalizado
+                huertoButton.setTextSize(18); // Tamaño del texto
+                huertoButton.setAllCaps(false); // Sin mayúsculas
+                huertoButton.setElevation(6); // Sombra para profundidad
+
+                // Configurar márgenes y ancho personalizado
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                        (int) (getResources().getDisplayMetrics().widthPixels * 0.8), // 80% del ancho de la pantalla
+                        LinearLayout.LayoutParams.WRAP_CONTENT // Alto del botón ajustado al contenido
+                );
+                params.setMargins(0, 16, 0, 16); // Márgenes: izquierda, arriba, derecha, abajo
+                params.gravity = Gravity.CENTER_HORIZONTAL; // Centrar horizontalmente
+                huertoButton.setLayoutParams(params);
+
+                // Configurar la acción al hacer clic en el botón
                 huertoButton.setOnClickListener(v -> {
                     Intent intent = new Intent(this, DetalleHuertoActivity.class);
                     intent.putExtra("nombre", huerto.getNombre());
@@ -75,10 +113,13 @@ public class GestionarHuertosActivity extends AppCompatActivity {
                     intent.putExtra("huertoId", huerto.getId());
                     startActivity(intent);
                 });
-                listaHuertosLayout.addView(huertoButton);
+
+                listaHuertosLayout.addView(huertoButton); // Añadir botón al layout
             }
         }
     }
+
+
 
     @Override
     protected void onResume() {

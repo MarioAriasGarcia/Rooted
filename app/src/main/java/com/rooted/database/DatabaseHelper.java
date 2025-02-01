@@ -114,15 +114,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createHuertosTable);
 
 
-        // Crear tabla de plantas
+        // Crear tabla de plantas con ON DELETE CASCADE
         String createPlantasTable = "CREATE TABLE " + TABLE_PLANTAS + " (" +
                 COLUMN_PLANTA_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_PLANTA_NOMBRE + " TEXT NOT NULL, " +
                 COLUMN_PLANTA_HUERTO_ID + " INTEGER, " +
                 COLUMN_TIEMPO_RIEGO + " INTEGER, " +
                 COLUMN_TIEMPO_CRECIMIENTO + " INTEGER, " +
-                "FOREIGN KEY(" + COLUMN_PLANTA_HUERTO_ID + ") REFERENCES " + TABLE_HUERTOS + "(" + COLUMN_HUERTO_ID + "))";
+                "FOREIGN KEY(" + COLUMN_PLANTA_HUERTO_ID + ") REFERENCES " + TABLE_HUERTOS + "(" + COLUMN_HUERTO_ID + ") ON DELETE CASCADE)";
         db.execSQL(createPlantasTable);
+
 
         // Crear tabla de plantas-enciclopèdia
         String createEnciclopediaTable = "CREATE TABLE " + TABLE_ENCICLOPEDIA + " (" +

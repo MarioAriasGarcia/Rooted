@@ -3,6 +3,7 @@ package com.rooted.model.entities;
 import com.rooted.model.DAOs.PlantaDAO;
 
 public class Planta {
+    private int id;
     private String nombre;
     private int tiempoRiego;
     private int tiempoCrecimiento;
@@ -11,6 +12,10 @@ public class Planta {
         this.nombre = nombre;
         this.tiempoRiego = tiempoRiego;
         this.tiempoCrecimiento = tiempoCrecimiento;
+    }
+
+    public int getId(){
+        return this.id;
     }
 
     public String getNombre() {

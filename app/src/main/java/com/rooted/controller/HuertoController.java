@@ -32,4 +32,8 @@ public class HuertoController {
     public List<Huerto> obtenerHuertosPorUsuario(int userId) {
         return huertoDAO.getHuertosByUserId(userId);
     }
+
+    public boolean eliminarHuerto(int huertoId){
+        return huertoDAO.eliminarHuerto(huertoId);
+    }
 }

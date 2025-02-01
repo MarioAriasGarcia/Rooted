@@ -70,8 +70,22 @@
         android:text="Añadir nueva planta al huerto"
         android:textSize="18sp"
         android:textAllCaps="false"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"/>
+
+    <!-- Botón para eliminar un huerto -->
+    <Button
+        android:id="@+id/eliminar_huerto"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/color_button_delete"
+        android:text="ELIMINAR HUERTO"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="2dp"/>
 
     <!-- Botón para volver al menú principal -->
     <Button
@@ -81,7 +95,7 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/rounded_rectangle"
         android:backgroundTint="#DAFFAD"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Volver atras"/>
 
 </LinearLayout>

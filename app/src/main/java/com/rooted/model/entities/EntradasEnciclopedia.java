@@ -21,27 +21,27 @@ public class EntradasEnciclopedia {
 
     public String toStringNombre(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Nombre: " + this.nombre + " ");
+        sb.append(this.nombre + " ");
         return sb.toString();
     }
     public String toStringDescripcion(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Descripción: " + this.descripcion + " ");
+        sb.append(this.descripcion + " ");
         return sb.toString();
     }
     public String toStringRiego(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Riego: " + this.riego + " " );
+        sb.append(this.riego + " " );
         return sb.toString();
     }
     public String toStringFormaPlantar(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Forma de plantar: " + this.forma_plantar + " ");
+        sb.append(this.forma_plantar + " ");
         return sb.toString();
     }
     public String toStringFormaRecoger(){
         StringBuilder sb = new StringBuilder();
-        sb.append("Forma de recoger: " + this.forma_recoger + " ");
+        sb.append( this.forma_recoger + " ");
         return sb.toString();
     }
 

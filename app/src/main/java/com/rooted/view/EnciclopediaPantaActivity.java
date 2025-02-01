@@ -41,15 +41,15 @@ public class EnciclopediaPantaActivity extends AppCompatActivity {
 
         // Asignar los valores obtenidos a los TextView
         nombreTextView.setText(datoNombre);
-        descripcionTextView.setText("Descripción: " + datoDescripcion);
-        riegoTextView.setText("Detalles sobre el riego: " + datoRiego);
-        plantarTextView.setText("Forma de plantar: " + datoPlantar);
-        cosecharTextView.setText("Forma de recoger: " + datoRecoger);
+        descripcionTextView.setText(datoDescripcion);
+        riegoTextView.setText(datoRiego);
+        plantarTextView.setText(datoPlantar);
+        cosecharTextView.setText(datoRecoger);
 
         // Configurar botón de volver al menú
-        Button volverMenuButton = findViewById(R.id.volver_enciclopedia_button);
-        volverMenuButton.setOnClickListener(v -> {
-            Intent intent = new Intent(EnciclopediaPantaActivity.this, MainActivity.class);
+        Button volverEnciclopediaButton = findViewById(R.id.volver_enciclopedia_button);
+        volverEnciclopediaButton.setOnClickListener(v -> {
+            Intent intent = new Intent(EnciclopediaPantaActivity.this, EnciclopediaActivity.class);
             startActivity(intent);
             finish();
         });

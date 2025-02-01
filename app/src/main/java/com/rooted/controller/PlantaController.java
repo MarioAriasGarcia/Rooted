@@ -14,11 +14,17 @@ public class PlantaController {
     private PlantaDAO plantaDAO;
     private HuertoDAO huertoDAO;
 
+    private static int plant_count = 0;
+
     public PlantaController(Context context) {
         this.plantaDAO = new PlantaDAO(context);
         this.huertoDAO = new HuertoDAO(context);
     }
 
+
+    public static int  getPlant_count() {
+        return plant_count;
+    }
     public Planta añadirPlanta(String plantaNombre, int huertoId) {
         // Obtener el huerto desde la base de datos
         Huerto huerto = huertoDAO.getHuertoById(huertoId);
@@ -37,6 +43,7 @@ public class PlantaController {
         if (insertada) {
             // Añadir la planta al huerto localmente
             huerto.agregarPlanta(nuevaPlanta);
+            plant_count++;
             return nuevaPlanta; // Retorna la planta creada
         }
 

@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
+import com.rooted.controller.PlantaController;
 import com.rooted.database.DatabaseHelper;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -27,6 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
         // Recuperar username y userId del Intent
         String username = getIntent().getStringExtra("username");
         int userId = getIntent().getIntExtra("user_id", -1);
+        int plant_count = PlantaController.getPlant_count();
 
         // Verifica si userId o username son inválidos
         if (username == null) {
@@ -42,10 +44,12 @@ public class ProfileActivity extends AppCompatActivity {
         // Configurar los TextViews
         TextView usernameTextView = findViewById(R.id.username_textview); // Asume que este es el ID para el TextView de "Nombre de usuario"
         TextView userIdTextView = findViewById(R.id.user_id); // ID del TextView para "ID de usuario"
+        TextView plant_countTextView = findViewById(R.id.plant_count); // ID del TextView para "Cantidad de plantas"
 
         // Establecer los valores en los TextViews
         usernameTextView.setText("" + username);
         userIdTextView.setText("" + userId);
+        plant_countTextView.setText("" + plant_count);
 
         // Configurar el botón para volver al menú principal
         Button volverMenuButton = findViewById(R.id.volver_menu_button);

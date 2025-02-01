@@ -10,24 +10,9 @@ public class RegisterController {
         this.usuarioDAO = new UsuarioDAO(context);
     }
 
-    public String registerUser(String username, String password, String confirmPassword) {
-        // Validar campos vacíos
-        if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-            return "Por favor, completa todos los campos";
-        }
-
-        // Validar que las contraseñas coincidan
-        if (!password.equals(confirmPassword)) {
-            return "Las contraseñas no coinciden";
-        }
-
+    public boolean registerUser(String username, String password) {
         // Intentar registrar el usuario
-        boolean isRegistered = usuarioDAO.registerUser(username, password);
-        if (isRegistered) {
-            return "Usuario registrado exitosamente";
-        } else {
-            return "El nombre de usuario ya está en uso";
-        }
+        return usuarioDAO.registerUser(username, password);
     }
 
 }

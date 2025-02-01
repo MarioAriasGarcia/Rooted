@@ -13,11 +13,16 @@ import com.rooted.controller.EnciclopediaController;
 public class EnciclopediaPantaActivity extends AppCompatActivity {
 
     private EnciclopediaController enciclopediaController;
+    int userId;
+    String nombreUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planta_enciclopedia);
+
+        userId = getIntent().getIntExtra("user_id", -1);
+        nombreUsuario = getIntent().getStringExtra("username");
 
         // Inicializar controlador
         enciclopediaController = new EnciclopediaController();
@@ -50,6 +55,9 @@ public class EnciclopediaPantaActivity extends AppCompatActivity {
         Button volverEnciclopediaButton = findViewById(R.id.volver_enciclopedia_button);
         volverEnciclopediaButton.setOnClickListener(v -> {
             Intent intent = new Intent(EnciclopediaPantaActivity.this, EnciclopediaActivity.class);
+            intent.putExtra("user_id", userId); // Pasar el user_id a la siguiente actividad
+            intent.putExtra("username", nombreUsuario); // Pasar el nombre de usuario a la siguiente actividad
+            System.out.println("ESTOY EN ENCICLOPEDIA ACTIVITY, El nombre del usuario es: " + nombreUsuario + " y su id es: " + userId);
             startActivity(intent);
             finish();
         });

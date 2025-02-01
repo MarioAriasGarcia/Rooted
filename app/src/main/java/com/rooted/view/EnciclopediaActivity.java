@@ -56,6 +56,8 @@ public class EnciclopediaActivity extends AppCompatActivity {
                     //Toast.makeText(this, tipoSeleccionado + " añadido correctamente al huerto", Toast.LENGTH_SHORT).show();
                     // Devolver datos a la actividad anterior
                     Intent resultIntent = new Intent(EnciclopediaActivity.this, EnciclopediaPantaActivity.class);
+                    resultIntent.putExtra("user_id", userId); // Pasar el user_id a la siguiente actividad
+                    resultIntent.putExtra("username", nombreUsuario); // Pasar el nombre de usuario a la siguiente actividad
                     resultIntent.putExtra("plantaNombre", tipoSeleccionado);
                     startActivity(resultIntent);
                 }

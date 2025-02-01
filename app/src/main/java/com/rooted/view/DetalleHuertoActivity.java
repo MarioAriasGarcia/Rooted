@@ -99,7 +99,7 @@ public class DetalleHuertoActivity extends AppCompatActivity {
 
         // Configurar botón para borrar huerto
         Button eliminarHuertoButton = findViewById(R.id.eliminar_huerto);
-
+        eliminarHuertoButton.setOnClickListener(v -> eliminarHuerto());
 
         // Configurar botón para volver al menú
         Button volverMenuButton = findViewById(R.id.volver_atras_button);

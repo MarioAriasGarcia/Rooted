@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -114,31 +115,34 @@ public class DetalleHuertoActivity extends AppCompatActivity {
 
     // Método para mostrar las plantas del huerto
     private void mostrarPlantasUsuario(int huertoId) {
+        listaPlantasLayout.removeAllViews(); // Elimina todas las vistas actuales
+
         List<Planta> plantas = plantaController.obtenerPlantasPorHuerto(huertoId);
 
-        if (plantas.isEmpty()) {
-            mensajeSinPlantas.setVisibility(View.VISIBLE); // Mostrar el mensaje si no hay plantas
-        } else {
-            mensajeSinPlantas.setVisibility(View.GONE); // Ocultar el mensaje si hay plantas
-//            if (mensajeSinPlantas != null) {
-//                listaPlantasLayout.removeView(mensajeSinPlantas);
-//                mensajeSinPlantas = null;
-//            }
 
+        if (plantas.isEmpty()) {
+            mensajeSinPlantas.setVisibility(View.VISIBLE);
+            if (mensajeSinPlantas.getParent() == null) {
+                listaPlantasLayout.addView(mensajeSinPlantas);
+            }
+        } else {
+            mensajeSinPlantas.setVisibility(View.GONE);
             for (Planta planta : plantas) {
                 addPlantaButton(planta.getNombre());
             }
         }
+
     }
+
 
 
     // Método para agregar un botón con la planta añadida
     private void addPlantaButton(String plantaNombre) {
         // Eliminar mensaje si existe
         if (mensajeSinPlantas != null) {
-            listaPlantasLayout.removeView(mensajeSinPlantas);
-            mensajeSinPlantas = null;
+            mensajeSinPlantas.setVisibility(View.GONE);
         }
+
 
         // Crear botón dinámico
         ImageButton plantaButton = new ImageButton(this);
@@ -181,11 +185,12 @@ public class DetalleHuertoActivity extends AppCompatActivity {
                 break;
             }
         }
+
+        // Mostrar el mensaje si no quedan plantas
+        if (listaPlantasLayout.getChildCount() == 0) {
+            mensajeSinPlantas.setVisibility(View.VISIBLE); // Mostrar el mensaje
+        }
     }
-
-
-
-
 
 
     /**
@@ -245,5 +250,12 @@ public class DetalleHuertoActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mostrarPlantasUsuario(huertoId);
+
     }
 }

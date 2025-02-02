@@ -35,17 +35,20 @@ public class DetalleHuertoActivity extends AppCompatActivity {
     // Crear el ActivityResultLauncher para manejar el resultado de añadir una planta
     private final ActivityResultLauncher<Intent> addPlantaLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<androidx.activity.result.ActivityResult>() {
-                @Override
-                public void onActivityResult(androidx.activity.result.ActivityResult result) {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        String plantaNombre = result.getData().getStringExtra("plantaNombre");
-                        if (plantaNombre != null) {
-                            addPlantaButton(plantaNombre);
-                        }
+            result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    String plantaNombre = result.getData().getStringExtra("plantaNombre");
+                    if (plantaNombre != null) {
+                        addPlantaButton(plantaNombre);
+                    }
+                } else if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    String plantaEliminada = result.getData().getStringExtra("plantaEliminada");
+                    if (plantaEliminada != null) {
+                        eliminarPlantaButton(plantaEliminada);
                     }
                 }
             });
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +147,9 @@ public class DetalleHuertoActivity extends AppCompatActivity {
         plantaButton.setBackground(null);
         plantaButton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+        // Asignar ID único al botón basado en el nombre de la planta
+        plantaButton.setTag(plantaNombre); // Usamos el nombre como identificador único
+
         int sizeInDp = 100;
         int sizeInPx = (int) (sizeInDp * getResources().getDisplayMetrics().density);
 
@@ -155,11 +161,29 @@ public class DetalleHuertoActivity extends AppCompatActivity {
         plantaButton.setLayoutParams(params);
 
         plantaButton.setOnClickListener(v -> {
-            Toast.makeText(this, "Has seleccionado " + plantaNombre, Toast.LENGTH_SHORT).show();
+            Intent detallePlantaIntent = new Intent(this, PlantaActivity.class);
+            int plantaId = plantaController.obtenerPlantaIdPorNombreYHuerto(plantaNombre, huertoId);
+            detallePlantaIntent.putExtra("plantaId", plantaId);
+            detallePlantaIntent.putExtra("nombrePlanta", plantaNombre);
+            detallePlantaIntent.putExtra("huertoId", huertoId);
+            detallePlantaIntent.putExtra("fechaPlantacion", "2025-02-01"); // Cambia esto por la fecha real
+            startActivity(detallePlantaIntent);
         });
 
         listaPlantasLayout.addView(plantaButton);
     }
+
+    private void eliminarPlantaButton(String plantaNombre) {
+        for (int i = 0; i < listaPlantasLayout.getChildCount(); i++) {
+            View view = listaPlantasLayout.getChildAt(i);
+            if (plantaNombre.equals(view.getTag())) {
+                listaPlantasLayout.removeView(view);
+                break;
+            }
+        }
+    }
+
+
 
 
 

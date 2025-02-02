@@ -8,7 +8,15 @@ public class Planta {
     private int tiempoRiego;
     private int tiempoCrecimiento;
 
+    public Planta(int id, String nombre, int tiempoRiego, int tiempoCrecimiento) {
+        this.id = id;
+        this.nombre = nombre;
+        this.tiempoRiego = tiempoRiego;
+        this.tiempoCrecimiento = tiempoCrecimiento;
+    }
+
     public Planta(String nombre, int tiempoRiego, int tiempoCrecimiento) {
+        this.id = id;
         this.nombre = nombre;
         this.tiempoRiego = tiempoRiego;
         this.tiempoCrecimiento = tiempoCrecimiento;

@@ -91,14 +91,37 @@ public class PlantaDAO {
 
         if (cursor != null && cursor.moveToFirst()) {
             do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
                 String nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"));
                 int tiempoRiego = cursor.getInt(cursor.getColumnIndexOrThrow("tiempo_riego"));
                 int tiempoCrecimiento = cursor.getInt(cursor.getColumnIndexOrThrow("tiempo_crecimiento"));
 
-                plantas.add(new Planta(nombre, tiempoRiego, tiempoCrecimiento));
+                plantas.add(new Planta(id, nombre, tiempoRiego, tiempoCrecimiento));
             } while (cursor.moveToNext());
             cursor.close();
         }
         return plantas;
     }
+
+    public int obtenerPlantaIdPorNombreYHuerto(String nombrePlanta, int huertoId) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        String query = "SELECT id FROM plantas WHERE nombre = ? AND huerto_id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{nombrePlanta, String.valueOf(huertoId)});
+
+        int plantaId = -1;
+        if (cursor.moveToFirst()) {
+            plantaId = cursor.getInt(0);
+        }
+        cursor.close();
+        db.close();
+
+        return plantaId;
+    }
+
+    public boolean eliminarPlanta(int plantaId) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        int rowsDeleted = db.delete("plantas", "id = ?", new String[]{String.valueOf(plantaId)});
+        return rowsDeleted > 0; // Devuelve true si se eliminó al menos una fila
+    }
+
 }

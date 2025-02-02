@@ -83,6 +83,11 @@
             android:exported="true"
             android:theme="@style/Theme.Rooted">
         </activity>
+        <activity
+            android:name=".view.PlantaActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Rooted">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

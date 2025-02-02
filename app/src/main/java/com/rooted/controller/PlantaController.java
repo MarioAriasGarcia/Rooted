@@ -53,6 +53,22 @@ public class PlantaController {
     public List<Planta> obtenerPlantasPorHuerto(int huertoId){
         return plantaDAO.getPlantasByHuertoId(huertoId);
     }
+
+    public int obtenerTiempoRiego(String nombrePlanta){
+        return plantaDAO.getTiempoRiego(nombrePlanta);
+    }
+
+    public int obtenerTiempoCrecimiento(String nombrePlanta){
+        return plantaDAO.getTiempoCrecimiento(nombrePlanta);
+    }
+
+    public int obtenerPlantaIdPorNombreYHuerto(String plantaNombre, int huertoId){
+        return plantaDAO.obtenerPlantaIdPorNombreYHuerto(plantaNombre, huertoId);
+    }
+
+    public boolean eliminarPlanta(int plantaId){
+        return plantaDAO.eliminarPlanta(plantaId);
+    }
 }
 
 

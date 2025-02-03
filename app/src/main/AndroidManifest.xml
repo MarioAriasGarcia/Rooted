@@ -101,6 +101,11 @@
             android:theme="@style/Theme.Rooted">
         </activity>
         <activity
+            android:name=".view.AgregarPlantaEnciclopediaAdminActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Rooted">
+        </activity>
+        <activity
             android:name=".view.PlantaActivity"
             android:exported="true"
             android:theme="@style/Theme.Rooted">

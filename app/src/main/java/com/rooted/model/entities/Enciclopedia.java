@@ -1,5 +1,7 @@
 package com.rooted.model.entities;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class Enciclopedia {
@@ -7,21 +9,30 @@ public class Enciclopedia {
     public ArrayList<EntradasEnciclopedia> entradasEnciclopedia;
 
     public static Enciclopedia instance;
-    public Enciclopedia(){
-        entradasEnciclopedia = new ArrayList<EntradasEnciclopedia>();
+    private Enciclopedia() {
+        entradasEnciclopedia = new ArrayList<>();
         rellenarEnciclopedia();
+      //  Log.d("Enciclopedia", "Enciclopedia creada y rellenada.");
     }
 
-    public Enciclopedia getInstance(){
-        if (instance==null){
+    public static Enciclopedia getInstance() {
+        if (instance == null) {
             instance = new Enciclopedia();
+           // Log.d("Enciclopedia", "Nueva instancia de Enciclopedia creada.");
+        } else {
+           // Log.d("Enciclopedia", "Se usó una instancia existente de Enciclopedia.");
         }
         return instance;
     }
 
-   public void addEntrada(EntradasEnciclopedia entrada){
+    public ArrayList<EntradasEnciclopedia> getEntradasEnciclopedia(){
+        return this.entradasEnciclopedia;
+    }
+
+    public void addEntrada(EntradasEnciclopedia entrada) {
         this.entradasEnciclopedia.add(entrada);
-   }
+        //Log.d("Enciclopedia", "Entrada agregada: " + entrada.getNombre());
+    }
 
 
    public EntradasEnciclopedia buscarPlanta(String nombrePlanta){
@@ -36,6 +47,11 @@ public class Enciclopedia {
         return entrada;
    }
    public void rellenarEnciclopedia(){
+
+       if (!entradasEnciclopedia.isEmpty()) {
+           //Log.d("Enciclopedia", "La enciclopedia ya estaba rellena.");
+           return;
+       }
 
        EntradasEnciclopedia Tomate = new EntradasEnciclopedia("Tomate",
                "El tomate (Solanum lycopersicum) es un fruto rico en vitaminas A y C, ampliamente utilizado en ensaladas, salsas y otros platillos.",
@@ -128,6 +144,7 @@ public class Enciclopedia {
                "Se cosechan cuando la cáscara está dura y presenta el color característico de la variedad. Se recomienda dejar secar los frutos al sol durante unos días antes de almacenarlos.");
        this.addEntrada(Calabaza);
 
+       //Log.d("Enciclopedia", "Enciclopedia rellenada con " + entradasEnciclopedia.size() + " entradas.");
 
    }
 }

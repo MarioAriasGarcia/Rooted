@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.rooted.controller.EnciclopediaController;
 import com.rooted.model.DAOs.UsuarioDAO;
 import com.rooted.view.LoginActivity;
 import com.rooted.view.MainActivity;

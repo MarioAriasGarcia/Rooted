@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/login_bg">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="sans-serif"
+        android:text="Añadir nueva planta"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        android:textColor="@color/black"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edit_nombre_planta"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:hint="Nombre de la Planta"
+        android:background="@drawable/rounded_rectangle"
+        android:padding="10dp"/>
+
+    <EditText
+        android:id="@+id/edit_descripcion"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:hint="Descripción"
+        android:background="@drawable/rounded_rectangle"
+        android:padding="10dp"
+        android:inputType="textMultiLine"/>
+
+    <EditText
+        android:id="@+id/edit_riego"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Frecuencia de riego"
+        android:background="@drawable/rounded_rectangle"
+        android:padding="10dp"/>
+
+    <EditText
+        android:id="@+id/edit_forma_plantar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:hint="Forma de plantar"
+        android:background="@drawable/rounded_rectangle"
+        android:padding="10dp"
+        android:inputType="textMultiLine"/>
+
+    <EditText
+        android:id="@+id/edit_forma_recoger"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:hint="Forma de recoger"
+        android:background="@drawable/rounded_rectangle"
+        android:padding="10dp"
+        android:inputType="textMultiLine"/>
+
+    <Button
+        android:id="@+id/btn_agregar_planta"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Agregar"
+        android:backgroundTint="#DAFFAD"
+        android:background="@drawable/rounded_rectangle"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/btn_volver"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:text="Volver"
+        android:backgroundTint="#FFAAAA"
+        android:background="@drawable/rounded_rectangle"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>

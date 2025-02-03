@@ -8,12 +8,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
+import com.rooted.controller.EnciclopediaController;
 import com.rooted.controller.LoginController;
 import com.rooted.model.DAOs.UsuarioDAO;
 
 public class MainActivity extends AppCompatActivity {
 
     LoginController loginController;
+    EnciclopediaController enciclopediaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         loginController = new LoginController(this);
+        enciclopediaController = new EnciclopediaController(this); //Creamos el controlador para rellenar la enciclopedia nada mas arrancar la app
+
 
         // Recuperar el user_id y el username desde el Intent
         int userId = getIntent().getIntExtra("user_id", -1);

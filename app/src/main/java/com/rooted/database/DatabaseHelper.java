@@ -73,9 +73,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_IMAGEN_PLANTA_ID = "planta_id"; // Clave foránea
     private static final String COLUMN_IMAGEN_URI = "uri";
 
-
-
-
+    //Tabla tutoriales
+    public static final String TABLE_TUTORIALES = "tutoriales";
+    public static final String CCOLUMN_VIDEO_NAME = "nombre_video";
+    private static final String COLUMN_VIDEO_URI = "uri_video";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -167,7 +168,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + COLUMN_IMAGEN_PLANTA_ID + ") REFERENCES " + TABLE_PLANTAS + "(" + COLUMN_PLANTA_ID + ") ON DELETE CASCADE)";
         db.execSQL(createPlantasImagenesTable);
 
-
+        String createTablaTutoriales = "CREATE TABLE " + TABLE_TUTORIALES + " (" +
+                CCOLUMN_VIDEO_NAME + "TEXT NOT NULL," +
+                COLUMN_VIDEO_URI + " TEXT NOT NULL) ";
+        db.execSQL(createTablaTutoriales);
 
 
     }
@@ -240,6 +244,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
     private void createAdminUser(SQLiteDatabase db) {
         // Generar salt y hash para el usuario administrador
         String adminPassword = "admin"; // Cambia esta contraseña según lo necesario
@@ -272,3 +277,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 }
+    

@@ -25,7 +25,7 @@
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:layout_height="389dp" />
+        android:layout_height="305dp" />
 
     <Button
         android:id="@+id/view_button"
@@ -38,10 +38,20 @@
         android:text="Ver Tutorial" />
 
     <Button
+        android:id="@+id/add_tutorial_button"
+        android:layout_width="300dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_rectangle"
+        android:backgroundTint="#DAFFAD"
+        android:text="Añadir tutorial" />
+
+    <Button
         android:id="@+id/volver_menu_button"
         android:layout_width="300dp"
         android:layout_height="48dp"
-        android:layout_marginLeft="40dp"
+        android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:background="@drawable/rounded_rectangle"
         android:backgroundTint="#DAFFAD"

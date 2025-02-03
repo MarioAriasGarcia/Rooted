@@ -50,6 +50,15 @@ public class TutorialesActivity extends AppCompatActivity {
         });
 
         configurarSpinner();
+
+        Button addTutorialButton = findViewById(R.id.add_tutorial_button);
+        addTutorialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addTutorial();
+                configurarSpinner();
+            }
+        });
     }
 
     private void configurarSpinner(){
@@ -85,4 +94,8 @@ public class TutorialesActivity extends AppCompatActivity {
     }
 
     //para añadir tutoriales meter los nombres en un array list para configuarar el spinner, luego añadir al array list el nombre del video nuevo
+
+    private void addTutorial(){
+
+    }
 }

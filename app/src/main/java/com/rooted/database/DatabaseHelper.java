@@ -15,7 +15,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rooted.db";
-    private static final int DATABASE_VERSION = 26; // Incrementar versión para los nuevos cambios
+    private static final int DATABASE_VERSION = 27; // Incrementar versión para los nuevos cambios
     private static DatabaseHelper instance;
 
     // Tabla de usuarios
@@ -77,6 +77,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_TUTORIALES = "tutoriales";
     public static final String CCOLUMN_VIDEO_NAME = "nombre_video";
     private static final String COLUMN_VIDEO_URI = "uri_video";
+
+
+
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -244,7 +247,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
     private void createAdminUser(SQLiteDatabase db) {
         // Generar salt y hash para el usuario administrador
         String adminPassword = "admin"; // Cambia esta contraseña según lo necesario
@@ -273,8 +275,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENCICLOPEDIA);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTAS_DATA);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTAS_IMAGENES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TUTORIALES);
 
         onCreate(db);
     }
 }
-    

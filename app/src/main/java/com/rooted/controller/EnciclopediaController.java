@@ -2,6 +2,7 @@ package com.rooted.controller;
 
 import android.content.Context;
 
+import com.rooted.model.DAOs.EnciclopediaDAO;
 import com.rooted.model.DAOs.HuertoDAO;
 import com.rooted.model.DAOs.UsuarioDAO;
 import com.rooted.model.entities.Enciclopedia;
@@ -15,9 +16,12 @@ public class EnciclopediaController {
 
     private Enciclopedia enciclopedia = new Enciclopedia();
 
-    public EnciclopediaController() {
-        this.enciclopedia = enciclopedia.getInstance();
+    private EnciclopediaDAO enciclopediaDAO;
 
+    public EnciclopediaController(Context context) {
+        this.enciclopedia = enciclopedia.getInstance();
+        this.enciclopediaDAO = new EnciclopediaDAO(context);
+        enciclopediaDAO.insertarDatosEnciclopedia();
     }
 
     public  EntradasEnciclopedia buscarPlanta(String tipoPlanta) {

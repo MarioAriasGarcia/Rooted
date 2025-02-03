@@ -19,15 +19,15 @@ import java.util.Locale;
 
 public class MensajeDAO {
     private DatabaseHelper databaseHelper;
+    private UsuarioDAO usuarioDAO;
 
     public MensajeDAO(Context context) {
         databaseHelper = DatabaseHelper.getInstance(context);
+        usuarioDAO = new UsuarioDAO(context);
     }
 
     // Método para insertar un mensaje
-
-
-    public boolean insertMensaje(Mensaje mensaje) {
+    public boolean insertMensaje(Mensaje mensaje, int userId) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -39,6 +39,7 @@ public class MensajeDAO {
         values.put("message_subtype", mensaje.getSubtype());
         values.put("message_content", mensaje.getContent());
         values.put("date", formattedDate); // Guardar la fecha como texto legible
+        values.put("user_id", userId);
 
         long result = db.insert("messages", null, values);
         db.close();
@@ -47,32 +48,25 @@ public class MensajeDAO {
 
 
     // Método para obtener todos los mensajes
-    public List<Mensaje> getAllMensajes() {
+    public List<String[]> obtenerTodosLosMensajes() {
+        List<String[]> listaMensajes = new ArrayList<>();
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        List<Mensaje> mensajes = new ArrayList<>();
+        Cursor cursor = db.rawQuery("SELECT message_type, message_content, message_subtype, user_id, date FROM messages", null);
 
-        Cursor cursor = db.query("messages", null, null, null, null, null, "fecha DESC");
         if (cursor.moveToFirst()) {
             do {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-                String type = cursor.getString(cursor.getColumnIndexOrThrow("message_type"));
-                String subtype = cursor.getString(cursor.getColumnIndexOrThrow("message_subtype"));
-                String content = cursor.getString(cursor.getColumnIndexOrThrow("message_content"));
-                long fechaMillis = cursor.getLong(cursor.getColumnIndexOrThrow("date"));
-
-                mensajes.add(new Mensaje(id, type, subtype, content, new Date(fechaMillis)));
+                String tipo = cursor.getString(0);
+                String titulo = cursor.getString(1);
+                String descripcion = cursor.getString(2);
+                int userId = Integer.parseInt(cursor.getString(3));
+                String autor = usuarioDAO.getUserNameByUserId(userId);
+                String fechaMensaje = cursor.getString(4);
+                listaMensajes.add(new String[]{tipo, titulo, descripcion, autor, fechaMensaje});
             } while (cursor.moveToNext());
         }
         cursor.close();
         db.close();
-        return mensajes;
+        return listaMensajes;
     }
 
-    // Método para eliminar un mensaje por ID
-    public boolean deleteMensaje(int id) {
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        int result = db.delete("messages", "id=?", new String[]{String.valueOf(id)});
-        db.close();
-        return result > 0;
-    }
 }

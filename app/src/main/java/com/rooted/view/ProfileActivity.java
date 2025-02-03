@@ -29,6 +29,7 @@ public class ProfileActivity extends AppCompatActivity {
         String username = getIntent().getStringExtra("username");
         int userId = getIntent().getIntExtra("user_id", -1);
         int plant_count = PlantaController.getPlant_count();
+        boolean isAdmin = getIntent().getBooleanExtra("isAdmin", false);
 
         // Verifica si userId o username son inválidos
         if (username == null) {

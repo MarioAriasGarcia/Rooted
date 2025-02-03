@@ -30,6 +30,7 @@ public class GestionarHuertosActivity extends AppCompatActivity {
 
         String username = getIntent().getStringExtra("username");
         int userId = getIntent().getIntExtra("user_id", -1);
+        boolean isAdmin = getIntent().getBooleanExtra("isAdmin", false);
 
         if (username == null || userId == -1) {
             System.out.println("El nombre de usuario es: " + username + " y mi id es: " + userId);

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Enciclopedia {
 
-    private ArrayList<EntradasEnciclopedia> entradasEnciclopedia;
+    public ArrayList<EntradasEnciclopedia> entradasEnciclopedia;
 
     public static Enciclopedia instance;
     public Enciclopedia(){

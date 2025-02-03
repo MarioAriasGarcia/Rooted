@@ -35,6 +35,7 @@ public class SoporteActivity extends AppCompatActivity {
         // Recuperar datos del Intent
         userId = getIntent().getIntExtra("user_id", -1);
         nombreUsuario = getIntent().getStringExtra("username");
+        boolean isAdmin = getIntent().getBooleanExtra("isAdmin", false);
 
         // Inicializamos el controlador
         soporteController = new SoporteController(this);
@@ -94,7 +95,7 @@ public class SoporteActivity extends AppCompatActivity {
         }
 
         // Delegar al controlador para guardar el mensaje
-        boolean isInserted = soporteController.guardarMensaje(tipoSeleccionado, tipoErrorConsulta, contenidoMensaje);
+        boolean isInserted = soporteController.guardarMensaje(tipoSeleccionado, tipoErrorConsulta, contenidoMensaje, userId);
 
         if (isInserted) {
             Toast.makeText(this, "Mensaje guardado correctamente", Toast.LENGTH_SHORT).show();

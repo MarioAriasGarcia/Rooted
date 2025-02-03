@@ -26,6 +26,7 @@ public class TutorialesActivity extends AppCompatActivity {
 
         int userId = getIntent().getIntExtra("user_id", -1);
         String nombreUsuario = getIntent().getStringExtra("username");
+        boolean isAdmin = getIntent().getBooleanExtra("isAdmin", false);
 
         Button volverMenuButton = findViewById(R.id.volver_menu_button);
         volverMenuButton.setOnClickListener(new View.OnClickListener() {

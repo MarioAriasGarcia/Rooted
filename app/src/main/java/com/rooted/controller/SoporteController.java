@@ -6,6 +6,8 @@ import com.rooted.model.DAOs.MensajeDAO;
 import com.rooted.model.entities.MensajeReporte;
 import com.rooted.model.entities.MensajeSoporte;
 
+import java.util.List;
+
 public class SoporteController {
     private MensajeDAO mensajeDAO;
 
@@ -14,7 +16,7 @@ public class SoporteController {
     }
 
     // Método para guardar un mensaje genérico
-    public boolean guardarMensaje(String tipo, String errorConsulta, String contenido) {
+    public boolean guardarMensaje(String tipo, String errorConsulta, String contenido, int userId) {
         Mensaje mensaje;
 
         if (tipo.equals("Reporte")) {
@@ -24,6 +26,10 @@ public class SoporteController {
         } else {
             return false; // Tipo no válido
         }
-        return mensajeDAO.insertMensaje(mensaje);
+        return mensajeDAO.insertMensaje(mensaje, userId);
+    }
+
+    public List<String[]> obtenerTodosLosMensajes() {
+        return mensajeDAO.obtenerTodosLosMensajes();
     }
 }

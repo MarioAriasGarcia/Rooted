@@ -27,4 +27,8 @@ public class LoginController {
         }
         return null;
     }
+
+    public boolean isAdmin(String username){
+        return usuarioDAO.isAdmin(username);
+    }
 }

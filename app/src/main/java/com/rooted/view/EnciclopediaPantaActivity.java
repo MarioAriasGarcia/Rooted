@@ -25,7 +25,7 @@ public class EnciclopediaPantaActivity extends AppCompatActivity {
         nombreUsuario = getIntent().getStringExtra("username");
 
         // Inicializar controlador
-        enciclopediaController = new EnciclopediaController();
+        enciclopediaController = new EnciclopediaController(this);
 
         // Obtener el nombre de la planta desde el Intent
         String nombrePlanta = getIntent().getStringExtra("plantaNombre");

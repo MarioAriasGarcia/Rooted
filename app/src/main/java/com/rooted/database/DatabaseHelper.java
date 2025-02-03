@@ -7,13 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.rooted.model.entities.EncriptacionPassword;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rooted.db";
-    private static final int DATABASE_VERSION = 19; // Incrementar versión para los nuevos cambios
+    private static final int DATABASE_VERSION = 24; // Incrementar versión para los nuevos cambios
     private static DatabaseHelper instance;
 
     // Tabla de usuarios
@@ -34,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_MESSAGE_SUBTYPE = "message_subtype";
     private static final String COLUMN_MESSAGE_CONTENT = "message_content";
     private static final String FECHA = "date";
+    private static final String COLUMN_MESSAGE_USER_ID = "user_id"; // Clave foránea
 
     // Tabla de huertos
     private static final String TABLE_HUERTOS = "huertos";
@@ -88,13 +91,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Crear tabla de usuarios
+        // Crear tabla de usuarios con columna is_admin
         String createUsersTable = "CREATE TABLE " + TABLE_USERS + " (" +
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_USERNAME + " TEXT UNIQUE NOT NULL, " +
                 COLUMN_PASSWORD + " TEXT NOT NULL, " +
-                COLUMN_SALT + " TEXT NOT NULL)";
+                COLUMN_SALT + " TEXT NOT NULL, " +
+                "is_admin INTEGER DEFAULT 0)"; // 0 para usuarios normales, 1 para admin
         db.execSQL(createUsersTable);
+        createAdminUser(db);
+
 
         // Crear tabla para ultimo inicio de sesion
         String createLastLoginTable = "CREATE TABLE " + TABLE_LAST_LOGIN + " (" +
@@ -108,7 +114,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_MESSAGE_TYPE + " TEXT NOT NULL, " +
                 COLUMN_MESSAGE_SUBTYPE + " TEXT, " +
                 COLUMN_MESSAGE_CONTENT + " TEXT NOT NULL, "+
-                FECHA + " INTEGER NOT NULL)";
+                FECHA + " INTEGER NOT NULL, " +
+                "user_id INTEGER, " +
+                "FOREIGN KEY(user_id) REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
         db.execSQL(createMessagesTable);
 
         // Crear tabla de huertos
@@ -158,6 +166,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_IMAGEN_URI + " TEXT NOT NULL, " +
                 "FOREIGN KEY(" + COLUMN_IMAGEN_PLANTA_ID + ") REFERENCES " + TABLE_PLANTAS + "(" + COLUMN_PLANTA_ID + ") ON DELETE CASCADE)";
         db.execSQL(createPlantasImagenesTable);
+
+
+
 
     }
 
@@ -227,6 +238,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
                 COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Calabaza', " + (5) + ", " + (100) + ")");
     }
+
+
+    private void createAdminUser(SQLiteDatabase db) {
+        // Generar salt y hash para el usuario administrador
+        String adminPassword = "admin"; // Cambia esta contraseña según lo necesario
+        String salt = EncriptacionPassword.generateSalt(); // Genera un salt único
+        String hashedPassword = EncriptacionPassword.encryptPassword(adminPassword, salt); // Hashea la contraseña con el salt
+
+        // Inserta el usuario administrador en la base de datos
+        String insertAdminUser = "INSERT INTO " + TABLE_USERS + " (" +
+                COLUMN_USERNAME + ", " +
+                COLUMN_PASSWORD + ", " +
+                COLUMN_SALT + ", " +
+                "is_admin) VALUES ('admin', '" + hashedPassword + "', '" + salt + "', 1)";
+        db.execSQL(insertAdminUser);
+    }
+
 
 
     @Override

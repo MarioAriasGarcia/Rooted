@@ -8,17 +8,25 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
+import com.rooted.controller.LoginController;
 import com.rooted.model.DAOs.UsuarioDAO;
 
 public class MainActivity extends AppCompatActivity {
+
+    LoginController loginController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loginController = new LoginController(this);
+
         // Recuperar el user_id y el username desde el Intent
         int userId = getIntent().getIntExtra("user_id", -1);
         String nombreUsuario = getIntent().getStringExtra("username");
+
+        boolean isAdmin = loginController.isAdmin(nombreUsuario);
 
         // Verificar que el user_id sea válido
         if (userId == -1) {
@@ -37,41 +45,52 @@ public class MainActivity extends AppCompatActivity {
         // Configurar los botones
         Button gestionarHuertosButton = findViewById(R.id.gestionar_huertos_button);
         gestionarHuertosButton.setOnClickListener(v -> {
-        Intent intent = new Intent(MainActivity.this, GestionarHuertosActivity.class);
-        intent.putExtra("user_id", userId);
-        intent.putExtra("username", nombreUsuario);
-        startActivity(intent);
-    });
+            Intent intent = new Intent(MainActivity.this, GestionarHuertosActivity.class);
+            intent.putExtra("user_id", userId);
+            intent.putExtra("username", nombreUsuario);
+            intent.putExtra("isAdmin", isAdmin);
+            startActivity(intent);
+        });
 
         Button tutorialesButton = findViewById(R.id.tutoriales_button);
         tutorialesButton.setOnClickListener(v -> {
-        Intent intent = new Intent(MainActivity.this, TutorialesActivity.class);
-        intent.putExtra("user_id", userId);
-        intent.putExtra("username", nombreUsuario);
-        startActivity(intent);
-    });
+            Intent intent = new Intent(MainActivity.this, TutorialesActivity.class);
+            intent.putExtra("user_id", userId);
+            intent.putExtra("username", nombreUsuario);
+            intent.putExtra("isAdmin", isAdmin);
+            startActivity(intent);
+        });
 
         Button enciclopediaButton = findViewById(R.id.enciclopedia_button);
         enciclopediaButton.setOnClickListener(v -> {
-        Intent intent = new Intent(MainActivity.this, EnciclopediaActivity.class);
-        intent.putExtra("user_id", userId);
-        intent.putExtra("username", nombreUsuario);
-        startActivity(intent);
-    });
+            Intent intent = new Intent(MainActivity.this, EnciclopediaActivity.class);
+            intent.putExtra("user_id", userId);
+            intent.putExtra("username", nombreUsuario);
+            intent.putExtra("isAdmin", isAdmin);
+            startActivity(intent);
+        });
 
         Button soporteButton = findViewById(R.id.soporte_button);
         soporteButton.setOnClickListener(v -> {
-        Intent intent = new Intent(MainActivity.this, SoporteActivity.class);
-        intent.putExtra("user_id", userId);
-        intent.putExtra("username", nombreUsuario);
-        startActivity(intent);
-    });
+            Intent intent;
+            if (isAdmin) {
+                intent = new Intent(MainActivity.this, SoporteAdminActivity.class); // Actividad para administradores
+            } else {
+                intent = new Intent(MainActivity.this, SoporteActivity.class); // Actividad para usuarios normales
+            }
+
+            intent.putExtra("user_id", userId);
+            intent.putExtra("username", nombreUsuario);
+            intent.putExtra("isAdmin", isAdmin);
+            startActivity(intent);
+        });
 
         Button miPerfilButton = findViewById(R.id.miPerfil_button);
         miPerfilButton.setOnClickListener(v -> {
         Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
         intent.putExtra("user_id", userId);
         intent.putExtra("username", nombreUsuario);
+        intent.putExtra("isAdmin", isAdmin);
         startActivity(intent);
     });
 

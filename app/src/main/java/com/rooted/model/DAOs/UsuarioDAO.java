@@ -28,7 +28,9 @@ public class UsuarioDAO {
             System.out.println("No existe ese nombre de usuario");
         }
         cursor.close();
-        createLastLogin(username);
+        if(isValid){
+            createLastLogin(username);
+        }
         return isValid;
     }
 
@@ -46,6 +48,23 @@ public class UsuarioDAO {
         }
         cursor.close();
         return userId;
+    }
+
+    // Obtener el ID del usuario por su nombre
+    public String getUserNameByUserId(int userId) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT username FROM users WHERE id = ?",
+                new String[]{String.valueOf(userId)}
+        );
+
+        String userName = null;
+        if (cursor.moveToFirst()) {
+            userName = cursor.getString(0); // Obtener el valor de la primera columna
+        }
+
+        cursor.close(); // Cerrar el cursor para evitar fugas de memoria
+        return userName;
     }
 
     public boolean registerUser(String username, String password) {
@@ -132,5 +151,22 @@ public class UsuarioDAO {
         cursor.close();
         return salt;
     }
+
+    public boolean isAdmin(String username) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.query("users", new String[]{"is_admin"},
+                "username = ?", new String[]{username}, null, null, null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            boolean isAdmin = cursor.getInt(0) == 1;
+            cursor.close();
+            return isAdmin;
+        }
+        return false;
+    }
+
+
+
+
 
 }

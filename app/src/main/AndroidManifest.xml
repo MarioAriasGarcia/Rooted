@@ -66,6 +66,11 @@
             android:theme="@style/Theme.Rooted">
         </activity>
         <activity
+            android:name=".view.SoporteAdminActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Rooted">
+        </activity>
+        <activity
             android:name=".view.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Rooted">

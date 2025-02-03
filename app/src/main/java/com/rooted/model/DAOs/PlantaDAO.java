@@ -124,4 +124,35 @@ public class PlantaDAO {
         return rowsDeleted > 0; // Devuelve true si se eliminó al menos una fila
     }
 
+    public long agregarImagen(int plantaId, String uri) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("uri", uri);
+        values.put("planta_id", plantaId);
+        return db.insert("plantas_imagenes", null, values);
+    }
+
+    public List<String> obtenerImagenesPorPlanta(int plantaId) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        List<String> uris = new ArrayList<>();
+        Cursor cursor = db.query("plantas_imagenes", new String[]{"uri"}, "planta_id = ?",
+                new String[]{String.valueOf(plantaId)}, null, null, null);
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                uris.add(cursor.getString(0));
+            }
+            cursor.close();
+        }
+        return uris;
+    }
+
+
+    // Eliminar una imagen específica
+    public void eliminarImagen(String uri) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        db.delete("plantas_imagenes", "uri = ?", new String[]{uri});
+    }
+
+
 }

@@ -23,7 +23,10 @@ import com.rooted.controller.HuertoController;
 import com.rooted.controller.PlantaController;
 import com.rooted.model.entities.Planta;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class DetalleHuertoActivity extends AppCompatActivity {
     private PlantaController plantaController;
@@ -170,7 +173,9 @@ public class DetalleHuertoActivity extends AppCompatActivity {
             detallePlantaIntent.putExtra("plantaId", plantaId);
             detallePlantaIntent.putExtra("nombrePlanta", plantaNombre);
             detallePlantaIntent.putExtra("huertoId", huertoId);
-            detallePlantaIntent.putExtra("fechaPlantacion", "2025-02-01"); // Cambia esto por la fecha real
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            String fechaActual = dateFormat.format(new Date());
+            detallePlantaIntent.putExtra("fechaPlantacion", fechaActual);
             startActivity(detallePlantaIntent);
         });
 

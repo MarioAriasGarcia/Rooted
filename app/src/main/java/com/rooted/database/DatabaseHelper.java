@@ -13,7 +13,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rooted.db";
-    private static final int DATABASE_VERSION = 17; // Incrementar versión para los nuevos cambios
+    private static final int DATABASE_VERSION = 19; // Incrementar versión para los nuevos cambios
     private static DatabaseHelper instance;
 
     // Tabla de usuarios
@@ -63,6 +63,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PLANTA_NOMBRE_DATA = "nombrePlantaData";
     public static final String COLUMN_TIEMPO_RIEGO_DATA = "tiempoRiegoPlantaData";
     public static final String COLUMN_TIEMPO_CRECIMIENTO_DATA = "tiempoCrecimientoPlantaData";
+
+    // Tabla de imágenes de plantas
+    private static final String TABLE_PLANTAS_IMAGENES = "plantas_imagenes";
+    private static final String COLUMN_IMAGEN_ID = "id";
+    private static final String COLUMN_IMAGEN_PLANTA_ID = "planta_id"; // Clave foránea
+    private static final String COLUMN_IMAGEN_URI = "uri";
+
 
 
 
@@ -143,73 +150,82 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createPlantasDataTable);
         // Llamar al método para insertar datos predeterminados
         insertDefaultPlantData(db);
+
+        // Crear tabla de imágenes de plantas
+        String createPlantasImagenesTable = "CREATE TABLE " + TABLE_PLANTAS_IMAGENES + " (" +
+                COLUMN_IMAGEN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_IMAGEN_PLANTA_ID + " INTEGER, " +
+                COLUMN_IMAGEN_URI + " TEXT NOT NULL, " +
+                "FOREIGN KEY(" + COLUMN_IMAGEN_PLANTA_ID + ") REFERENCES " + TABLE_PLANTAS + "(" + COLUMN_PLANTA_ID + ") ON DELETE CASCADE)";
+        db.execSQL(createPlantasImagenesTable);
+
     }
 
     private void insertDefaultPlantData(SQLiteDatabase db) {
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Tomate', " + (7 * 24 * 60 * 60) + ", " + (90 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Tomate', " + (7) + ", " + (90) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Lechuga', " + (3 * 24 * 60 * 60) + ", " + (60 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Lechuga', " + (3) + ", " + (60) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Garbanzos', " + (5 * 24 * 60 * 60) + ", " + (120 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Garbanzos', " + (5) + ", " + (120) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Pimientos', " + (6 * 24 * 60 * 60) + ", " + (80 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Pimientos', " + (6) + ", " + (80) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Cebolla', " + (4 * 24 * 60 * 60) + ", " + (150 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Cebolla', " + (4) + ", " + (150) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Lentejas', " + (5 * 24 * 60 * 60) + ", " + (90 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Lentejas', " + (5) + ", " + (90) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Frijoles', " + (4 * 24 * 60 * 60) + ", " + (70 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Frijoles', " + (4) + ", " + (70) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Habas', " + (6 * 24 * 60 * 60) + ", " + (85 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Habas', " + (6) + ", " + (85) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Guisantes', " + (3 * 24 * 60 * 60) + ", " + (60 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Guisantes', " + (3) + ", " + (60) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Patata', " + (7 * 24 * 60 * 60) + ", " + (120 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Patata', " + (7) + ", " + (120) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Yuca', " + (10 * 24 * 60 * 60) + ", " + (240 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Yuca', " + (10) + ", " + (240) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Pepino', " + (3 * 24 * 60 * 60) + ", " + (50 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Pepino', " + (3) + ", " + (50) + ")");
 
         db.execSQL("INSERT INTO " + TABLE_PLANTAS_DATA + " (" +
                 COLUMN_PLANTA_NOMBRE_DATA + ", " +
                 COLUMN_TIEMPO_RIEGO_DATA + ", " +
-                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Calabaza', " + (5 * 24 * 60 * 60) + ", " + (100 * 24 * 60 * 60) + ")");
+                COLUMN_TIEMPO_CRECIMIENTO_DATA + ") VALUES ('Calabaza', " + (5) + ", " + (100) + ")");
     }
 
 
@@ -223,6 +239,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTAS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ENCICLOPEDIA);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTAS_DATA);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLANTAS_IMAGENES);
 
         onCreate(db);
     }

@@ -32,9 +32,20 @@
 
     <Button
         android:id="@+id/guardar_planta_button"
-        android:layout_width="200dp"
+        android:layout_width="220dp"
         android:layout_height="48dp"
         android:text="Guardar planta"
+        android:backgroundTint="#DAFFAD"
+        android:background="@drawable/rounded_rectangle"
+        android:layout_gravity="center_horizontal"/>
+
+    <Button
+        android:id="@+id/cancelar_button"
+        android:layout_width="130dp"
+        android:layout_marginTop="300dp"
+        android:layout_height="48dp"
+        android:text="Cancelar"
+        android:textStyle="bold"
         android:backgroundTint="#DAFFAD"
         android:background="@drawable/rounded_rectangle"
         android:layout_gravity="center_horizontal"/>

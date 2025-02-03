@@ -53,21 +53,29 @@ public class AddPlantaActivity extends AppCompatActivity{
                 Toast.makeText(this, "Selecciona una planta", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if(plantaController.yaEstaAñadida(tipoSeleccionado, huertoId)){
+                Toast.makeText(this, tipoSeleccionado + " ya esta añadido en este huerto", Toast.LENGTH_SHORT).show();
+            }else{
+                Planta nuevaPlanta = plantaController.añadirPlanta(tipoSeleccionado, huertoId);
+                if (nuevaPlanta != null) {
+                    Toast.makeText(this, tipoSeleccionado + " añadido correctamente al huerto", Toast.LENGTH_SHORT).show();
 
-            Planta nuevaPlanta = plantaController.añadirPlanta(tipoSeleccionado, huertoId);
-            if (nuevaPlanta != null) {
-                Toast.makeText(this, tipoSeleccionado + " añadido correctamente al huerto", Toast.LENGTH_SHORT).show();
-
-                // Devolver datos a la actividad anterior
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra("plantaNombre", nuevaPlanta.getNombre());
-                setResult(RESULT_OK, resultIntent);
-            } else {
-                Toast.makeText(this, "Error añadiendo la planta", Toast.LENGTH_SHORT).show();
-                setResult(RESULT_CANCELED);
+                    // Devolver datos a la actividad anterior
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("plantaNombre", nuevaPlanta.getNombre());
+                    setResult(RESULT_OK, resultIntent);
+                } else {
+                    Toast.makeText(this, "Error añadiendo la planta", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_CANCELED);
+                }
+                // Finalizar actividad
+                finish();
             }
 
-            // Finalizar actividad
+        });
+
+        Button cancelarButton = findViewById(R.id.cancelar_button);
+        cancelarButton.setOnClickListener(v -> {
             finish();
         });
 

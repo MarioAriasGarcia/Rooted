@@ -1,6 +1,7 @@
 package com.rooted.controller;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.rooted.model.DAOs.HuertoDAO;
 import com.rooted.model.DAOs.UsuarioDAO;
@@ -8,6 +9,7 @@ import com.rooted.model.entities.Huerto;
 import com.rooted.model.entities.Planta;
 import com.rooted.model.DAOs.PlantaDAO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlantaController {
@@ -26,6 +28,7 @@ public class PlantaController {
         return plant_count;
     }
     public Planta añadirPlanta(String plantaNombre, int huertoId) {
+
         // Obtener el huerto desde la base de datos
         Huerto huerto = huertoDAO.getHuertoById(huertoId);
         if (huerto == null) return null; // Retorna null si el huerto no existe
@@ -48,6 +51,16 @@ public class PlantaController {
         }
 
         return null; // Retorna null si no se insertó correctamente
+    }
+
+    public boolean yaEstaAñadida(String plantaNombre, int huertoId){
+        ArrayList<String> plantas= huertoDAO.getPlantasByHuertoId(huertoId);
+        for(int i = 0; i < plantas.size(); i++){
+            if(plantaNombre.equals(plantas.get(i))){
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<Planta> obtenerPlantasPorHuerto(int huertoId){

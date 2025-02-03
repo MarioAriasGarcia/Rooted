@@ -70,6 +70,33 @@ public class HuertoDAO {
         return huerto; // Devuelve el huerto o null si no se encontró
     }
 
+    public ArrayList<String> getPlantasByHuertoId(int huertoId) {
+        ArrayList<String> listaPlantas = new ArrayList<>();
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+
+        // Consulta SQL para obtener los nombres de las plantas en un huerto específico
+        Cursor cursor = db.rawQuery(
+                "SELECT " + "nombre" + " FROM " + "plantas" +
+                        " WHERE " + "huerto_id" + " = ?",
+                new String[]{String.valueOf(huertoId)}
+        );
+
+        // Agregar los resultados a la lista
+        if (cursor.moveToFirst()) {
+            do {
+                String nombrePlanta = cursor.getString(0);
+                listaPlantas.add(nombrePlanta);
+            } while (cursor.moveToNext());
+        }
+
+        // Cerrar cursor y base de datos
+        cursor.close();
+        db.close();
+
+        return listaPlantas;
+    }
+
+
     public boolean eliminarHuerto(int huertoId) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         int rowsDeleted = db.delete("huertos", "id = ?", new String[]{String.valueOf(huertoId)});

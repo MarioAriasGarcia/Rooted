@@ -155,4 +155,49 @@ public class PlantaDAO {
     }
 
 
+    //contar plantas de cada usuario
+    public int getPlantasCountByUser(int userId) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        int platscounter = 0;
+
+        String query = "SELECT COUNT(*) FROM plantas p " +
+                "INNER JOIN huertos h ON p.huerto_id = h.id " +
+                "WHERE h.user_id = ?";  // Corrección: usar 'user_id' en lugar de 'usuario_id'
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                platscounter = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return platscounter;
+    }
+
+    //contar fotos de cada usuario
+    public int getFotosCountByUser(int userId) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        int fotosCounter = 0;
+
+        String query = "SELECT COUNT(*) FROM plantas_imagenes pi " +
+                "INNER JOIN plantas p ON pi.planta_id = p.id " +
+                "INNER JOIN huertos h ON p.huerto_id = h.id " +
+                "WHERE h.user_id = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                fotosCounter = cursor.getInt(0);
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return fotosCounter;
+    }
+
 }

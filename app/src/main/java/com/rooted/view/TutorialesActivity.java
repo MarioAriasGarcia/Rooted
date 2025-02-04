@@ -26,11 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TutorialesActivity extends AppCompatActivity {
-    private boolean isPlaying = false;
     private TutorialesController tutorialesController;
     private String videoName;
     private List<String> nombres_videos = new ArrayList<>();
-    private String videoSeleccionado = "prueba";
+    private String videoSeleccionado = nombres_videos.get(0);
     private static final int PICK_VIDEO_REQUEST = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

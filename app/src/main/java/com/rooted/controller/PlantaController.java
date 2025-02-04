@@ -71,6 +71,10 @@ public class PlantaController {
         return plantaDAO.getTiempoRiego(nombrePlanta);
     }
 
+    public String getSiguienteRiego(int plantaId){
+        return plantaDAO.getSiguienteRiego(plantaId);
+    }
+
     public int obtenerTiempoCrecimiento(String nombrePlanta){
         return plantaDAO.getTiempoCrecimiento(nombrePlanta);
     }
@@ -79,8 +83,20 @@ public class PlantaController {
         return plantaDAO.obtenerPlantaIdPorNombreYHuerto(plantaNombre, huertoId);
     }
 
+    public void actualizarSiguienteRiego(int plantaId, String nuevaFechaRiego){
+        plantaDAO.actualizarSiguienteRiego(plantaId, nuevaFechaRiego);
+    }
+
     public boolean eliminarPlanta(int plantaId){
         return plantaDAO.eliminarPlanta(plantaId);
+    }
+
+    public void marcarComoRecogida(int plantaId){
+        plantaDAO.marcarComoRecogida(plantaId);
+    }
+
+    public boolean isRecogida(int plantaId){
+        return plantaDAO.isRecogida(plantaId);
     }
 }
 

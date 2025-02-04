@@ -41,22 +41,76 @@
         android:textSize="20sp"
         android:padding="8dp" />
 
-    <!-- Contenedor del ScrollView para el contenido que puede desplazarse -->
+    <!-- Contenedor del ScrollView -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="334dp"
         android:layout_weight="1">
 
-        <!-- Contenedor dinámico para la lista de huertos -->
         <LinearLayout
-            android:id="@+id/lista_huertos_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/color_button"
-            android:textAllCaps="false"
-            android:layout_marginBottom="20dp"/>
+            android:padding="8dp">
+
+            <!-- Texto con la fecha de hoy -->
+            <TextView
+                android:id="@+id/fecha_hoy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fecha de hoy: "
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:padding="8dp" />
+
+            <!-- Texto indicando si toca regar -->
+            <TextView
+                android:id="@+id/toca_regar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Es hora de regar!!"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:padding="8dp" />
+
+            <!-- Texto indicando si toca recoger -->
+            <TextView
+                android:id="@+id/toca_recoger"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Es hora de recoger!!"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:padding="8dp" />
+
+            <!-- Botón "Ya he regado hoy" -->
+            <Button
+                android:id="@+id/boton_regado_hoy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ya he regado hoy"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="#31A6D9"
+                android:padding="12dp"
+                android:background="@drawable/rounded_rectangle"
+                android:layout_marginTop="10dp"/>
+            <!-- Botón "Ya he recogido hoy" -->
+            <Button
+                android:id="@+id/boton_recogido_hoy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ya he recogido hoy"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:backgroundTint="#FA8913"
+                android:padding="12dp"
+                android:background="@drawable/rounded_rectangle"
+                android:layout_marginTop="10dp"/>
+        </LinearLayout>
+
     </ScrollView>
 
     <Button
@@ -94,5 +148,5 @@
         android:background="@drawable/rounded_rectangle"
         android:backgroundTint="#DAFFAD"
         android:layout_marginTop="10dp"
-        android:text="Volver atras"/>
+        android:text="Volver atrás"/>
 </LinearLayout>

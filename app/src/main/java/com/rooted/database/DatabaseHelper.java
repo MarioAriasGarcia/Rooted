@@ -15,7 +15,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rooted.db";
-    private static final int DATABASE_VERSION = 27; // Incrementar versión para los nuevos cambios
+    private static final int DATABASE_VERSION = 32; // Incrementar versión para los nuevos cambios
     private static DatabaseHelper instance;
 
     // Tabla de usuarios
@@ -50,6 +50,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_PLANTA_NOMBRE = "nombre";
     private static final String COLUMN_TIEMPO_RIEGO = "tiempo_riego";
     private static final String COLUMN_TIEMPO_CRECIMIENTO = "tiempo_crecimiento";
+    private static final String COLUMN_SIGUIENTE_RIEGO = "siguiente_riego";
+    private static final String COLUMN_ESTA_RECOGIDA = "esta_recogida";
     private static final String COLUMN_PLANTA_HUERTO_ID = "huerto_id"; // Clave foránea
 
     // Tabla de plantas-enciclopedia
@@ -140,6 +142,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_PLANTA_HUERTO_ID + " INTEGER, " +
                 COLUMN_TIEMPO_RIEGO + " INTEGER, " +
                 COLUMN_TIEMPO_CRECIMIENTO + " INTEGER, " +
+                COLUMN_SIGUIENTE_RIEGO + " TEXT, " +
+                COLUMN_ESTA_RECOGIDA + " INTEGER, " +
                 "FOREIGN KEY(" + COLUMN_PLANTA_HUERTO_ID + ") REFERENCES " + TABLE_HUERTOS + "(" + COLUMN_HUERTO_ID + ") ON DELETE CASCADE)";
         db.execSQL(createPlantasTable);
 

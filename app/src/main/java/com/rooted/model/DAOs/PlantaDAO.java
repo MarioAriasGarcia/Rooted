@@ -154,5 +154,75 @@ public class PlantaDAO {
         db.delete("plantas_imagenes", "uri = ?", new String[]{uri});
     }
 
+    public String getSiguienteRiego(int plantaId) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        String siguienteRiego = "No disponible";
+
+        String query = "SELECT siguiente_riego FROM plantas WHERE id = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(plantaId)});
+
+        if (cursor.moveToFirst()) {
+            siguienteRiego = cursor.getString(0); // Obtener la fecha de riego
+        }
+
+        cursor.close();
+        db.close();
+
+        return siguienteRiego;
+    }
+
+    public void actualizarSiguienteRiego(int plantaId, String nuevaFechaRiego) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("siguiente_riego", nuevaFechaRiego);
+
+        int rowsUpdated = db.update("plantas", values, "id = ?", new String[]{String.valueOf(plantaId)});
+
+        db.close();
+    }
+
+    public void marcarComoRecogida(int plantaId) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("esta_recogida", 1); // 1 indica que la planta ha sido recogida
+
+        int rowsUpdated = db.update("plantas", values, "id = ?", new String[]{String.valueOf(plantaId)});
+
+        db.close();
+    }
+
+    public void marcarComoRecogida(int plantaId, int estado) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("esta_recogida", estado); // 1 = recogida, 0 = no recogida
+
+        int rowsUpdated = db.update("plantas", values, "id = ?", new String[]{String.valueOf(plantaId)});
+
+        db.close();
+    }
+
+    public boolean isRecogida(int plantaId) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        // Consulta para obtener el valor de la columna "ESTA_RECOGIDA" (supongo que es un entero)
+        String query = "SELECT " + "esta_recogida" + " FROM " + "plantas" + " WHERE " + "id" + " = ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(plantaId)});  // Asume que `plantaId` es el ID de la planta que buscas
+
+        if (cursor != null && cursor.moveToFirst()) {
+            // Obtén el valor de la columna "ESTA_RECOGIDA", que es un entero
+            int recogida = cursor.getInt(cursor.getColumnIndexOrThrow("esta_recogida"));
+            cursor.close(); // Cierra el cursor después de usarlo
+
+            // Devuelve si el valor es 1 (recogida) o 0 (no recogida)
+            return recogida == 1;
+        } else {
+            cursor.close();  // Cierra el cursor si no hay datos
+            return false;  // Si no se encuentra la planta o hay un error
+        }
+    }
+
+
+
+
 
 }

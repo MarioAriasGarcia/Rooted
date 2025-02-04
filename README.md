@@ -1,8 +1,5 @@
 # Rooted
 
-Primeras interfaces hechas, login y registro hechos, base de datos creada con sqlite, soporte hecho a falta de guardar mensajes en la base de datos.
+Bienvenidos a Rooted, una aplicación destinada a proporcionar una herramienta sencilla y eficiente para la gestión de los huertos, que permitirá al usuario registrar y gestionar sus cultivos, hacer un seguimiento de estos con mucha más facilidad, avisando al usuario cada vez que sea necesario el riego o en el momento de su cosecha.
 
-Funcionalidad de crear huertos:
-    - Se puede crear un huerto, y se añade a la base de datos, se enlaza con el usuario que lo ha creado
-    - PROBLEMA POR ARREGLAR: Se crean botones duplicados para entrar en los huertos ya creados  **ARREGLADO**
-    - PROBLEMA POR ARREGLAR: Cuando pulsas un boton para ver el huerto añadido, crashea por error en el formato de numero de size  **ARREGLADO**
+La audiencia a la que se dirige es un cliente con el objetivo de crear y mantener su propio huerto o sus propios cultivos, ya sea en su casa o en un terreno.

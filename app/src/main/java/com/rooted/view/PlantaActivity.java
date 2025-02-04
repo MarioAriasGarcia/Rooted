@@ -132,7 +132,7 @@ public class PlantaActivity extends AppCompatActivity {
     private String obtenerFechaHoy() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return LocalDate.now().format(formatter);
-        //return "06-05-2025";
+        //return "06-05-2025";             //PARA TESTEAR FECHAS DESCOMENTAR, COMENTAR EL OTRO RETURN, CAMBIAR A LA FECHA DESEADA Y RECOMPILAR
     }
 
     private void recogerPlanta() {

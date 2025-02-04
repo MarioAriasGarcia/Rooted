@@ -39,6 +39,10 @@ public class EnciclopediaController {
         return enciclopediaDAO.getAllPlantasEnciclopedia();
     }
 
+    public boolean eliminarPlanta(String nombrePlanta) {
+        return enciclopediaDAO.eliminarPlanta(nombrePlanta);
+    }
+
 
 
 }

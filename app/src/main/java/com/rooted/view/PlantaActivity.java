@@ -89,6 +89,7 @@ public class PlantaActivity extends AppCompatActivity {
         // Configurar botón "Ya he regado hoy"
         botonRegadoHoy.setOnClickListener(v -> {
             if (fechaHoy.equals(fechaRiego)) {
+                botonRegadoHoy.setText("Ya se ha regado");
                 String nuevaFechaRiego = calcularFechaProxima(fechaRiego, plantaController.obtenerTiempoRiego(nombrePlantaTextView.getText().toString()));
                 plantaController.actualizarSiguienteRiego(plantaId, nuevaFechaRiego);
                 fechaRiegoTextView.setText("Próximo riego: " + nuevaFechaRiego);
@@ -130,8 +131,8 @@ public class PlantaActivity extends AppCompatActivity {
 
     private String obtenerFechaHoy() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        //return LocalDate.now().format(formatter);
-        return "05-05-2025";
+        return LocalDate.now().format(formatter);
+        //return "06-05-2025";
     }
 
     private void recogerPlanta() {
@@ -139,10 +140,11 @@ public class PlantaActivity extends AppCompatActivity {
                 .setTitle("Confirmar recogida")
                 .setMessage("¿Estás seguro de que quieres recoger la planta? Esta acción no se puede deshacer.")
                 .setPositiveButton("Recoger", (dialog, which) -> {
+                    botonRecogidoHoy.setText("Ya se ha recogido");
                     plantaController.marcarComoRecogida(plantaId);
                     fechaRiegoTextView.setText("YA ESTÁ RECOGIDA");
                     fechaRecogidaTextView.setText("YA ESTÁ RECOGIDA");
-                    tocaRegarTextView.setText("");
+                    tocaRegarTextView.setText("Planta recogida");
                     tocaRecogerTextView.setText("");
                     botonRegadoHoy.setEnabled(false);
                     botonRecogidoHoy.setEnabled(false);
@@ -204,7 +206,7 @@ public class PlantaActivity extends AppCompatActivity {
 
         // Verificar si hoy es el día de riego
         if (fechaHoy.equals(fechaRiego)) {
-            botonRegadoHoy.setText("Ya he regado");
+            botonRegadoHoy.setText("Regar planta");
             tocaRegarTextView.setText("Es hora de regar!!");
             botonRegadoHoy.setEnabled(true);
         } else {
@@ -215,7 +217,7 @@ public class PlantaActivity extends AppCompatActivity {
 
         // Verificar si hoy es el día de recogida
         if (fechaHoy.equals(fechaRecogida)) {
-            botonRecogidoHoy.setText("Ya he recogido");
+            botonRecogidoHoy.setText("Recoger planta");
             tocaRecogerTextView.setText("Es hora de recoger!!");
             botonRecogidoHoy.setEnabled(true);
         } else {
@@ -224,10 +226,14 @@ public class PlantaActivity extends AppCompatActivity {
             botonRecogidoHoy.setEnabled(false);
         }
 
-        // Verificar si la fecha de hoy es posterior a la fecha de riego
+        if(esFechaPosterior(fechaHoy, fechaRecogida)){
+            mostrarDialogoOlvidoRecogida();
+        }
+
         if (esFechaPosterior(fechaHoy, fechaRiego)) {
             mostrarDialogoOlvidoRiego();
         }
+
     }
 
     private boolean esFechaPosterior(String fechaHoy, String fechaRiego) {
@@ -253,6 +259,24 @@ public class PlantaActivity extends AppCompatActivity {
                 .setNegativeButton("Más tarde", null)
                 .show();
     }
+
+    private void mostrarDialogoOlvidoRecogida() {
+        new AlertDialog.Builder(this)
+                .setTitle("¡Se te ha olvidado recoger la planta!")
+                .setMessage("La fecha de recogida ha pasado. Por favor, recoge la planta lo antes posible.")
+                .setPositiveButton("Recoger ahora", (dialog, which) -> {
+                    plantaController.marcarComoRecogida(plantaId);
+                    fechaRiegoTextView.setText("YA ESTÁ RECOGIDA");
+                    fechaRecogidaTextView.setText("YA ESTÁ RECOGIDA");
+                    botonRecogidoHoy.setEnabled(false);
+                    botonRegadoHoy.setEnabled(false);
+                    tocaRegarTextView.setText("Planta recogida");
+                    Toast.makeText(this, "Planta recogida", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Más tarde", null)
+                .show();
+    }
+
 
 
 }

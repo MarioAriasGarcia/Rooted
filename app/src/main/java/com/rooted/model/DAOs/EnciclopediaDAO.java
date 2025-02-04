@@ -124,6 +124,13 @@ public class EnciclopediaDAO {
         return listaPlantas;
     }
 
+    public boolean eliminarPlanta(String nombrePlanta) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        int rowsAffected = db.delete("enciclopedia", "nombre = ?", new String[]{nombrePlanta});
+        db.close();
+        return rowsAffected > 0;
+    }
+
 
 
 }

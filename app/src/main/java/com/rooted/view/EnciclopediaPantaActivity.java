@@ -2,9 +2,12 @@ package com.rooted.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.rooted.R;
@@ -15,6 +18,7 @@ public class EnciclopediaPantaActivity extends AppCompatActivity {
     private EnciclopediaController enciclopediaController;
     int userId;
     String nombreUsuario;
+    boolean isAdmin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,7 @@ public class EnciclopediaPantaActivity extends AppCompatActivity {
 
         userId = getIntent().getIntExtra("user_id", -1);
         nombreUsuario = getIntent().getStringExtra("username");
+        isAdmin = getIntent().getBooleanExtra("isAdmin", false);
 
         // Inicializar controlador
         enciclopediaController = new EnciclopediaController(this);
@@ -61,5 +66,38 @@ public class EnciclopediaPantaActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+
+        // Configurar botón de eliminar planta (solo para administradores)
+        Button eliminarPlantaButton = findViewById(R.id.eliminar_planta_button);
+        if (isAdmin) {
+            eliminarPlantaButton.setVisibility(View.VISIBLE); // Mostrar el botón si es admin
+        }
+
+        // Configurar el listener para el botón de eliminar
+        eliminarPlantaButton.setOnClickListener(v -> eliminarPlanta(nombrePlanta));
+    }
+
+    private void eliminarPlanta(String nombrePlanta) {
+        new AlertDialog.Builder(this)
+                .setTitle("Eliminar planta")
+                .setMessage("¿Estás seguro de que deseas eliminar la planta '" + nombrePlanta + "'? Esta acción no se puede deshacer.")
+                .setPositiveButton("Eliminar", (dialog, which) -> {
+                    // Llamar al controlador para eliminar la planta
+                    boolean eliminada = enciclopediaController.eliminarPlanta(nombrePlanta);
+                    if (eliminada) {
+                        Toast.makeText(this, "Planta eliminada exitosamente", Toast.LENGTH_SHORT).show();
+                        // Volver a la actividad de la enciclopedia
+                        Intent intent = new Intent(EnciclopediaPantaActivity.this, EnciclopediaActivity.class);
+                        intent.putExtra("user_id", userId);
+                        intent.putExtra("username", nombreUsuario);
+                        intent.putExtra("isAdmin", isAdmin);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(this, "Error al eliminar la planta", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
     }
 }

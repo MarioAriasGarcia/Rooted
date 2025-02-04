@@ -15,7 +15,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rooted.db";
-    private static final int DATABASE_VERSION = 32; // Incrementar versión para los nuevos cambios
+    private static final int DATABASE_VERSION = 33; // Incrementar versión para los nuevos cambios
     private static DatabaseHelper instance;
 
     // Tabla de usuarios

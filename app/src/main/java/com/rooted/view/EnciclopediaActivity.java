@@ -38,6 +38,7 @@ public class EnciclopediaActivity extends AppCompatActivity {
             Intent intent = new Intent(EnciclopediaActivity.this, MainActivity.class);
             intent.putExtra("user_id", userId);
             intent.putExtra("username", nombreUsuario);
+            intent.putExtra("isAdmin", isAdmin);
             startActivity(intent);
             finish();
         });
@@ -50,6 +51,7 @@ public class EnciclopediaActivity extends AppCompatActivity {
             resultIntent.putExtra("user_id", userId);
             resultIntent.putExtra("username", nombreUsuario);
             resultIntent.putExtra("plantaNombre", tipoSeleccionado);
+            resultIntent.putExtra("isAdmin", isAdmin);
             startActivity(resultIntent);
             finish();
         });

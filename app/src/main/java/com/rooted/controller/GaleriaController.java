@@ -13,12 +13,20 @@ import java.util.List;
 
 public class GaleriaController {
 
-    private PlantaDAO plantaDAO;
+    private static PlantaDAO plantaDAO;
 
     public GaleriaController(Context context) {
         this.plantaDAO = new PlantaDAO(context);
     }
 
+    public static int getPhoto_count(int userId) {
+        try {
+            // Intentamos obtener el conteo de plantas para el usuario
+            return plantaDAO.getFotosCountByUser(userId);
+        } catch (Exception e) {
+            return 0; // Devolvemos 0 si ocurre un error
+        }
+    }
     // Insertar imagen
     public long agregarImagen(int plantaId, String uri) {
         return plantaDAO.agregarImagen(plantaId, uri);

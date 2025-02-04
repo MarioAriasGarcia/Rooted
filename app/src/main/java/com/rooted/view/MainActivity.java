@@ -58,7 +58,12 @@ public class MainActivity extends AppCompatActivity {
 
         Button tutorialesButton = findViewById(R.id.tutoriales_button);
         tutorialesButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, TutorialesActivity.class);
+            Intent intent;
+            if (isAdmin) {
+                intent = new Intent(MainActivity.this, TutorialesActivity.class); // Actividad para administradores
+            } else {
+                intent = new Intent(MainActivity.this, TutorialesBaseUserActivity.class); // Actividad para usuarios normales
+            }
             intent.putExtra("user_id", userId);
             intent.putExtra("username", nombreUsuario);
             intent.putExtra("isAdmin", isAdmin);

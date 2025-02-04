@@ -77,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Tabla tutoriales
     public static final String TABLE_TUTORIALES = "tutoriales";
-    public static final String CCOLUMN_VIDEO_NAME = "nombre_video";
+    public static final String COLUMN_VIDEO_NAME = "nombre_video";
     private static final String COLUMN_VIDEO_URI = "uri_video";
 
 
@@ -176,8 +176,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createPlantasImagenesTable);
 
         String createTablaTutoriales = "CREATE TABLE " + TABLE_TUTORIALES + " (" +
-                CCOLUMN_VIDEO_NAME + "TEXT NOT NULL," +
-                COLUMN_VIDEO_URI + " TEXT NOT NULL) ";
+                COLUMN_VIDEO_NAME + " TEXT NOT NULL, " +
+                COLUMN_VIDEO_URI + " TEXT NOT NULL)";
         db.execSQL(createTablaTutoriales);
 
 

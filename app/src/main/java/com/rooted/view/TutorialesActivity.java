@@ -194,21 +194,18 @@ public class TutorialesActivity extends AppCompatActivity {
             this.nombres_videos.add("Buscar planta en enciclopedia");
             this.nombres_videos.add("Eliminar huerto");
             this.nombres_videos.add("Enviar mensaje reporte");
-            this.nombres_videos.add("Ver info usuario");
             String path1 = "android.resource://" + getPackageName() + "/" + R.raw.add_foto_a_planta;
             String path2 = "android.resource://" + getPackageName() + "/" + R.raw.add_huerto;
             String path3 = "android.resource://" + getPackageName() + "/" + R.raw.add_planta;
             String path4 = "android.resource://" + getPackageName() + "/" + R.raw.eliminar_huerto;
             String path5 = "android.resource://" + getPackageName() + "/" + R.raw.buscar_planta_en_la_enciclopedia;
             String path6 = "android.resource://" + getPackageName() + "/" + R.raw.enviar_mensaje_reporte;
-            String path7 = "android.resource://" + getPackageName() + "/" + R.raw.ver_info_usuario;
             tutorialesController.addTutorialC("Añadir foto planta", path1);
             tutorialesController.addTutorialC("Añadir huerto", path2);
             tutorialesController.addTutorialC("Añadir planta", path3);
             tutorialesController.addTutorialC("Eliminar huerto", path4);
             tutorialesController.addTutorialC("Buscar planta en enciclopedia", path5);
             tutorialesController.addTutorialC("Enviar mensaje reporte", path6);
-            tutorialesController.addTutorialC("Ver info usuario", path7);
             File internalStorage = getFilesDir();
             File[] files = internalStorage.listFiles();
 

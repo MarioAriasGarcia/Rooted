@@ -132,7 +132,7 @@ public class PlantaActivity extends AppCompatActivity {
     private String obtenerFechaHoy() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return LocalDate.now().format(formatter);
-        //return "06-05-2025";             //PARA TESTEAR FECHAS DESCOMENTAR, COMENTAR EL OTRO RETURN, CAMBIAR A LA FECHA DESEADA Y RECOMPILAR
+        //return "05-05-2025";             //PARA TESTEAR FECHAS DESCOMENTAR, COMENTAR EL OTRO RETURN, CAMBIAR A LA FECHA DESEADA Y RECOMPILAR
     }
 
     private void recogerPlanta() {
@@ -252,6 +252,7 @@ public class PlantaActivity extends AppCompatActivity {
                     String nuevaFechaRiego = calcularFechaProxima(obtenerFechaHoy(), plantaController.obtenerTiempoRiego(nombrePlantaTextView.getText().toString()));
                     plantaController.actualizarSiguienteRiego(plantaId, nuevaFechaRiego);
                     fechaRiegoTextView.setText("Próximo riego: " + nuevaFechaRiego);
+                    botonRegadoHoy.setText("Ya has regado hoy");
                     tocaRegarTextView.setText("Ya has regado hoy, vuelve a hacerlo el " + nuevaFechaRiego);
                     botonRegadoHoy.setEnabled(false);
                     Toast.makeText(this, "Fecha de riego actualizada", Toast.LENGTH_SHORT).show();

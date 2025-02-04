@@ -29,7 +29,7 @@ public class TutorialesActivity extends AppCompatActivity {
     private TutorialesController tutorialesController;
     private String videoName;
     private List<String> nombres_videos = new ArrayList<>();
-    private String videoSeleccionado = nombres_videos.get(0);
+    private String videoSeleccionado = "Añadir foto planta";
     private static final int PICK_VIDEO_REQUEST = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +83,6 @@ public class TutorialesActivity extends AppCompatActivity {
     private void configurarSpinner(){
         Spinner spinner = findViewById(R.id.spinner_videos);
         ArrayList<String> listaSpinner = new ArrayList<>();
-        listaSpinner.add("prueba");
-        listaSpinner.add("prueba2");
         listaSpinner.addAll(this.nombres_videos);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, listaSpinner);
@@ -99,7 +97,6 @@ public class TutorialesActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                videoSeleccionado = "prueba";
                 videoSeleccionado = nombres_videos.get(1);
             }
         });

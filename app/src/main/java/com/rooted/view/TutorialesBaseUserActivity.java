@@ -24,7 +24,7 @@ import java.util.List;
 public class TutorialesBaseUserActivity extends AppCompatActivity {
     private TutorialesController tutorialesController;
     private List<String> nombres_videos = new ArrayList<>();
-    private String videoSeleccionado = "prueba";
+    private String videoSeleccionado = "Añadir foto planta";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

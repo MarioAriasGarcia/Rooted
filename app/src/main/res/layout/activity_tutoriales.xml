@@ -24,15 +24,17 @@
 
     <VideoView
         android:id="@+id/videoView"
-        android:layout_width="match_parent"
-        android:layout_height="300dp" />
+        android:layout_width="200dp"
+        android:layout_gravity="center"
+        android:layout_height="400dp"
+        />
 
     <Button
         android:id="@+id/view_button"
         android:layout_width="300dp"
-        android:layout_height="48dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rounded_rectangle"
         android:backgroundTint="#DAFFAD"
         android:text="Ver Tutorial" />
@@ -40,9 +42,9 @@
     <Button
         android:id="@+id/add_tutorial_button"
         android:layout_width="300dp"
-        android:layout_height="48dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rounded_rectangle"
         android:backgroundTint="#DAFFAD"
         android:text="Añadir tutorial" />
@@ -50,9 +52,9 @@
     <Button
         android:id="@+id/volver_menu_button"
         android:layout_width="300dp"
-        android:layout_height="48dp"
+        android:layout_height="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/rounded_rectangle"
         android:backgroundTint="#DAFFAD"
         android:text="Volver al Menú Principal" />
